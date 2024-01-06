@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CakeBuild", "CakeBuild\CakeBuild.csproj", "{E23F20DE-ABB2-4163-A7DB-ADEEA06E7D89}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "butterflycases", "museumnet7\butterflycases.csproj", "{0D8F0A08-D040-4205-AA4B-98A94898DD25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "butterflycases", "butterflycases\butterflycases.csproj", "{D7E505A9-64C7-460E-9CED-DF6581C77343}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{E23F20DE-ABB2-4163-A7DB-ADEEA06E7D89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E23F20DE-ABB2-4163-A7DB-ADEEA06E7D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E23F20DE-ABB2-4163-A7DB-ADEEA06E7D89}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0D8F0A08-D040-4205-AA4B-98A94898DD25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D8F0A08-D040-4205-AA4B-98A94898DD25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D8F0A08-D040-4205-AA4B-98A94898DD25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D8F0A08-D040-4205-AA4B-98A94898DD25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7E505A9-64C7-460E-9CED-DF6581C77343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7E505A9-64C7-460E-9CED-DF6581C77343}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7E505A9-64C7-460E-9CED-DF6581C77343}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7E505A9-64C7-460E-9CED-DF6581C77343}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
