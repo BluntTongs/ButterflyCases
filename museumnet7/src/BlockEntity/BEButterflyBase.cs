@@ -6,29 +6,42 @@ using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
-using Vintagestory.ServerMods.NoObf;
 
-namespace museumcases
+namespace butterflycases
 {
-    public class BEMuseumCaseTall : BEMuseumBase, IRotatable
+    //The mother of all butterfly cases. It's much "cleaner" to simply inherit from this one class and make adjustments down the river than it is to have a lot of repeated individual code.
+    //
+    public class BEButterflyBase : BlockEntityDisplay, IRotatable
     {
-        public override string InventoryClassName => "museumcasetall";
-        //new InventoryGeneric inventory;
-        //override InventoryBase Inventory => inventory;
+        public override string InventoryClassName => "butterflybase";
+        protected InventoryGeneric inventory;
+        public override InventoryBase Inventory => inventory;
 
-        //new bool haveCenterPlacement;
-        //new float[] rotations = new float[8];
-        //new float[] vertrotations = new float[8];
+        public bool haveCenterPlacement;
 
-        public BEMuseumCaseTall()
+        public float[] rotations = new float[8];
+        public float[] vertrotations = new float[8];
+        public float[] rotValue
         {
-            inventory = new InventoryDisplayed(this, 8, "museumcasetall-0", null, null);
+            get { return rotations; }
+            set { rotations = value; }
+        }
+             
+        public float[] verrotValue
+        {
+            get { return vertrotations; }
+            set { vertrotations = value; }
         }
 
-        new internal bool OnInteract(IPlayer byPlayer, BlockSelection blockSel)
+        public BEButterflyBase()
+        {
+            inventory = new InventoryDisplayed(this, 4, "butterflybase-0", null, null);
+        }
+
+        internal bool OnInteract(IPlayer byPlayer, BlockSelection blockSel)
         {
             ItemSlot slot = byPlayer.InventoryManager.ActiveHotbarSlot;
-
+            
             if (slot.Empty)
             {
                 if (TryTake(byPlayer, blockSel))
@@ -40,7 +53,6 @@ namespace museumcases
             else
             {
                 CollectibleObject colObj = slot.Itemstack.Collectible;
-                if (colObj is ItemDisplayAdjuster) return false;
                 if (colObj.Attributes != null && colObj.Attributes["displaycaseable"].AsBool(false) == true)
                 {
                     AssetLocation sound = slot.Itemstack?.Block?.Sounds?.Place;
@@ -60,7 +72,7 @@ namespace museumcases
         }
 
 
-        new public void setBlockState(string state)
+        public void setBlockState(string state)
         {
             AssetLocation loc = Block.CodeWithVariant("type", state);
             Block block = Api.World.GetBlock(loc);
@@ -78,12 +90,13 @@ namespace museumcases
             bool nowCenterPlacement = inventory.Empty && Math.Abs(blockSel.HitPosition.X - 0.5f) < 0.1 && Math.Abs(blockSel.HitPosition.Z - 0.5f) < 0.1;
 
             var attr = slot.Itemstack.ItemAttributes;
-            float height = attr?["museumcase"]["minHeight"]?.AsFloat(0.25f) ?? 0;
-            if (height > (this.Block as BlockMuseumCase)?.height)
+            float height = attr?["butterflycase"]["minHeight"]?.AsFloat(0.25f) ?? 0;
+            if (height > (this.Block as BlockButterflyCase)?.height)
             {
                 (Api as ICoreClientAPI)?.TriggerIngameError(this, "tootall", Lang.Get("This item is too tall to fit in this display case."));
                 return false;
             }
+            //This stuff is mostly just inherited from the original display case code.
 
 
             haveCenterPlacement = nowCenterPlacement;
@@ -115,7 +128,7 @@ namespace museumcases
 
             return false;
         }
-        
+        //Checks whether an indexed inventory slot is empty
 
         private bool TryTake(IPlayer byPlayer, BlockSelection blockSel)
         {
@@ -152,33 +165,33 @@ namespace museumcases
 
 
 
-        //public override void GetBlockInfo(IPlayer forPlayer, StringBuilder sb)
-        //{
-        //    base.GetBlockInfo(forPlayer, sb);
+        public override void GetBlockInfo(IPlayer forPlayer, StringBuilder sb)
+        {
+            base.GetBlockInfo(forPlayer, sb);
 
-        //    sb.AppendLine();
+            sb.AppendLine();
 
-        //    if (forPlayer?.CurrentBlockSelection == null) return;
+            if (forPlayer?.CurrentBlockSelection == null) return;
 
-        //    int index = forPlayer.CurrentBlockSelection.SelectionBoxIndex;
-        //    if (index >= inventory.Count) return; // Why can this happen o.O
+            int index = forPlayer.CurrentBlockSelection.SelectionBoxIndex;
+            if (index >= inventory.Count) return; // Why can this happen o.O
 
-        //    if (!inventory[index].Empty)
-        //    {
-        //        sb.AppendLine(inventory[index].Itemstack.GetName());
-        //    }
-        //}
+            if (!inventory[index].Empty)
+            {
+                sb.AppendLine(inventory[index].Itemstack.GetName());
+            }
+        }
         //Adds the item name to the tooltip box at the top of the screen if the display case has something in it.
 
         protected override float[][] genTransformationMatrices()
         {
-            float[][] tfMatrices = new float[8][];
+            float[][] tfMatrices = new float[4][];
 
-            for (int index = 0; index < 8; index++)
+            for (int index = 0; index < 4; index++)
             {
                 float x = (index % 2 == 0) ? 4.5f / 16f : 11.5f / 16f;
-                float y = (index > 3) ? 8.01f / 16f : 1.01f / 16f;
-                float z = (index >= 2 && index <= 3 || index >= 6 && index <= 7) ? 11.5f / 16f : 4.5f / 16;
+                float y = 1.01f / 16f;
+                float z = (index > 1) ? 11.5f / 16f : 4.5f / 16;
 
                 float degY = rotations[index] * GameMath.RAD2DEG;
 
@@ -194,121 +207,94 @@ namespace museumcases
 
                 }
 
-                //
-                if (inventory[index].Itemstack != null && inventory[index].Itemstack.Collectible is ItemDeadButterfly)
-                    tfMatrices[index] =
-                    new Matrixf()
-                    .Translate(x , y + 0.2f, z)
-                    .RotateYDeg(degY)
-                    .RotateXDeg(degX)
-                    .RotateYDeg(42f)
-                    .Scale(0.75f, 0.75f, 0.75f)
-                    .Translate(-0.5f, 0, -0.5f)
-                    .Values;
-                else if (inventory[index].Itemstack != null && inventory[index].Itemstack.Collectible.WildCardMatch("*cheese*") | inventory[index].Itemstack.Collectible.WildCardMatch("*cloth*"))
-                    tfMatrices[index] =
-                    new Matrixf()
-                    .Translate(x, y + 0.15f, z)
-                    .RotateYDeg(degY)
-                    .RotateXDeg(degX)
-                    .Scale(0.7f, 0.7f, 0.7f)
-                    .Translate(-0.5f, 0, -0.5f)
-                    .Values;
-                else
-                    tfMatrices[index] =
-                    new Matrixf()
-                    .Translate(x, y + 0.15f, z)
-                    .RotateYDeg(degY)
-                    .RotateXDeg(degX)
-                    .Scale(0.75f, 0.75f, 0.75f)
-                    .Translate(-0.5f, 0, -0.5f)
-                    .Values;
 
+               
+                    if (inventory[index].Itemstack != null && inventory[index].Itemstack.Collectible is ItemDeadButterfly)
+                        tfMatrices[index] =
+                        new Matrixf()
+                        .Translate(x, y + 0.2f, z)
+                        .RotateYDeg(degY)
+                        .RotateXDeg(degX)
+                        .RotateYDeg(42f)
+                        .Scale(0.75f, 0.75f, 0.75f)
+                        .Translate(-0.5f, 0, -0.5f)
+                        .Values;
+                    
+                
             }
 
             return tfMatrices;
         }
+        
 
-        public override void FromTreeAttributes(Vintagestory.API.Datastructures.ITreeAttribute tree, IWorldAccessor worldForResolving)
+        //public override void FromTreeAttributes(Vintagestory.API.Datastructures.ITreeAttribute tree, IWorldAccessor worldForResolving)
+        //{
+        //    base.FromTreeAttributes(tree, worldForResolving);
+
+        //    haveCenterPlacement = tree.GetBool("haveCenterPlacement");
+        //    rotations = new float[]
+        //    {
+        //        tree.GetFloat("rotation0"),
+        //        tree.GetFloat("rotation1"),
+        //        tree.GetFloat("rotation2"),
+        //        tree.GetFloat("rotation3"),
+        //    };
+        //    vertrotations = new float[]
+        //    {
+        //        tree.GetFloat("vertrotation0"),
+        //        tree.GetFloat("vertrotation1"),
+        //        tree.GetFloat("vertrotation2"),
+        //        tree.GetFloat("vertrotation3"),
+        //    };
+        //}
+
+        //public override void ToTreeAttributes(Vintagestory.API.Datastructures.ITreeAttribute tree)
+        //{
+        //    base.ToTreeAttributes(tree);
+
+        //    tree.SetBool("haveCenterPlacement", haveCenterPlacement);
+        //    tree.SetFloat("rotation0", rotations[0]);
+        //    tree.SetFloat("rotation1", rotations[1]);
+        //    tree.SetFloat("rotation2", rotations[2]);
+        //    tree.SetFloat("rotation3", rotations[3]);
+
+        //    tree.SetFloat("vertrotation0", vertrotations[0]);
+        //    tree.SetFloat("vertrotation1", vertrotations[1]);
+        //    tree.SetFloat("vertrotation2", vertrotations[2]);
+        //    tree.SetFloat("vertrotation3", vertrotations[3]);
+        //}
+
+
+        public void OnTransformed(ITreeAttribute tree, int degreeRotation, EnumAxis? flipAxis)
         {
-            base.FromTreeAttributes(tree, worldForResolving);
-
-            haveCenterPlacement = tree.GetBool("haveCenterPlacement");
-            rotations = new float[]
-            {
-                tree.GetFloat("rotation0"),
-                tree.GetFloat("rotation1"),
-                tree.GetFloat("rotation2"),
-                tree.GetFloat("rotation3"),
-                tree.GetFloat("rotation4"),
-                tree.GetFloat("rotation5"),
-                tree.GetFloat("rotation6"),
-                tree.GetFloat("rotation7"),
-            };
-            vertrotations = new float[]
-            {
-                tree.GetFloat("vertrotation0"),
-                tree.GetFloat("vertrotation1"),
-                tree.GetFloat("vertrotation2"),
-                tree.GetFloat("vertrotation3"),
-                tree.GetFloat("vertrotation4"),
-                tree.GetFloat("vertrotation5"),
-                tree.GetFloat("vertrotation6"),
-                tree.GetFloat("vertrotation7"),
-            };
-        }
-
-        public override void ToTreeAttributes(Vintagestory.API.Datastructures.ITreeAttribute tree)
-        {
-            base.ToTreeAttributes(tree);
-
-            tree.SetBool("haveCenterPlacement", haveCenterPlacement);
-            tree.SetFloat("rotation0", rotations[0]);
-            tree.SetFloat("rotation1", rotations[1]);
-            tree.SetFloat("rotation2", rotations[2]);
-            tree.SetFloat("rotation3", rotations[3]);
-            tree.SetFloat("rotation4", rotations[4]);
-            tree.SetFloat("rotation5", rotations[5]);
-            tree.SetFloat("rotation6", rotations[6]);
-            tree.SetFloat("rotation7", rotations[7]);
-
-            tree.SetFloat("vertrotation0", vertrotations[0]);
-            tree.SetFloat("vertrotation1", vertrotations[1]);
-            tree.SetFloat("vertrotation2", vertrotations[2]);
-            tree.SetFloat("vertrotation3", vertrotations[3]);
-            tree.SetFloat("vertrotation4", vertrotations[4]);
-            tree.SetFloat("vertrotation5", vertrotations[5]);
-            tree.SetFloat("vertrotation6", vertrotations[6]);
-            tree.SetFloat("vertrotation7", vertrotations[7]);
-        }
-
-
-        new public void OnTransformed(ITreeAttribute tree, int degreeRotation, EnumAxis? flipAxis)
-        {
-            var rot = new int[] { 0, 1, 3, 2, 4, 5, 7, 6 };
-            var verrot = new int[] { 0, 1, 3, 2, 4, 5, 7, 6 };
-            var rots = new float[8];
-            var verrots = new float[8];
+            var rot = new int[] { 0, 1, 3, 2 };
+            var verrot = new int[] { 0, 1, 3, 2 };
+            var rots = new float[4];
+            var verrots = new float[4];
             var treeAttribute = tree.GetTreeAttribute("inventory");
             inventory.FromTreeAttributes(treeAttribute);
-            var inv = new ItemSlot[8];
-            var start = (degreeRotation / 90) % 8;
+            var inv = new ItemSlot[4];
+            var start = (degreeRotation / 90) % 4;
 
-            for (var i = 0; i < 8; i++)
+            
+
+            for (var i = 0; i < 4; i++)
             {
                 rots[i] = tree.GetFloat("rotation" + i);
                 verrots[i] = tree.GetFloat("vertrotation" + i);
                 inv[i] = inventory[i];
             }
 
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < 4; i++)
             {
-                var index = GameMath.Mod(i - start, 8);
+                var index = GameMath.Mod(i - start, 4);
                 // swap inventory and rotations with the new ones
                 rotations[rot[i]] = rots[rot[index]] - degreeRotation * GameMath.DEG2RAD;
                 vertrotations[verrot[i]] = verrots[verrot[index]] - degreeRotation * GameMath.DEG2RAD;
+
                 inventory[rot[i]] = inv[rot[index]];
                 inventory[verrot[i]] = inv[verrot[index]];
+                
                 tree.SetFloat("rotation" + rot[i], rotations[rot[i]]);
                 tree.SetFloat("vertrotation" + verrot[i], vertrotations[verrot[i]]);
             }
@@ -316,5 +302,7 @@ namespace museumcases
             inventory.ToTreeAttributes(treeAttribute);
             tree["inventory"] = treeAttribute;
         }
+
+       
     }
 }

@@ -24,7 +24,7 @@ public static class Program
 
 public class BuildContext : FrostingContext
 {
-    public const string ProjectName = "museumnet7";
+    public const string ProjectName = "butterflycases";
     public string BuildConfiguration { get; set; }
     public string Version { get; }
     public string Name { get; }

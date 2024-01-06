@@ -47,4 +47,9 @@
   </Content>
 </ItemGroup>
 
+<ItemGroup>
+  <Folder Include="assets\butterflycases\lang\" />
+  <Folder Include="assets\butterflycases\recipes\grid\" />
+</ItemGroup>
+
 </Project>

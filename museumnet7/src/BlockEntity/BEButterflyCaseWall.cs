@@ -8,29 +8,29 @@ using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 using Vintagestory.ServerMods.NoObf;
 
-namespace museumcases
+namespace butterflycases
 {
-    public class BEMuseumCaseWall : BEMuseumBase, IRotatable
+    public class BEButterflyCaseWall : BEButterflyBase, IRotatable
     {
-        public override string InventoryClassName => "museumcasewall";
+        public override string InventoryClassName => "butterflycasewall";
         //protected InventoryGeneric inventory;
         //public override InventoryBase Inventory => inventory;
 
         //bool haveCenterPlacement;
         //float[] rotations = new float[4];
         //float[] vertrotations = new float[4];
-        
 
-        public BEMuseumCaseWall()
+
+        public BEButterflyCaseWall()
         {
-            inventory = new InventoryDisplayed(this, 4, "museumcasewall-0", null, null);
+            inventory = new InventoryDisplayed(this, 4, "butterflycasewall-0", null, null);
         }
 
         //internal bool OnInteract(IPlayer byPlayer, BlockSelection blockSel)
         //{
         //    ItemSlot slot = byPlayer.InventoryManager.ActiveHotbarSlot;
 
-            
+
         //    if (slot.Empty)
         //    {
         //        if (TryTake(byPlayer, blockSel))
@@ -61,9 +61,8 @@ namespace museumcases
         //}
 
 
-        
-        //There's a lot of magic numbers at play here rn and it's kind of horrific but it shouldn't be hard to do some actual math to get what I want instead.
-        //I know I can trim this up and make it look a lot better SOMEHOW but it'll have to look like this for now while I learn.
+
+
         new public void setBlockState(string state)
         {
             AssetLocation loc = Block.CodeWithVariant("type", state);
@@ -82,7 +81,7 @@ namespace museumcases
         public float rotAdder()
         {
 
-           BlockFacing displayFacing = getFacing();
+            BlockFacing displayFacing = getFacing();
             float rotAdder = 1;
             if (displayFacing == BlockFacing.NORTH) rotAdder = 0f;
             if (displayFacing == BlockFacing.EAST) rotAdder = 4.71f;
@@ -90,27 +89,17 @@ namespace museumcases
             if (displayFacing == BlockFacing.WEST) rotAdder = 1.57f;
 
             return rotAdder;
-            
-        }
-        public float rotMultiplier()
-        {
-            BlockFacing displayFacing = getFacing();
-            float rotMultiplier = 0f;
-            if (displayFacing == BlockFacing.NORTH) rotMultiplier = 0;
-            if (displayFacing == BlockFacing.EAST) rotMultiplier = 90f;
-            if (displayFacing == BlockFacing.SOUTH) rotMultiplier = 180f;
-            if (displayFacing == BlockFacing.WEST) rotMultiplier = 270f;
 
-            return rotMultiplier;
         }
+        
         public float originOffsetSides()
         {
             BlockFacing displayFacing = getFacing();
             float originOffsetSides = 0f;
-            if (displayFacing == BlockFacing.NORTH || displayFacing == BlockFacing.EAST) originOffsetSides = 0f;
-            //if (displayFacing == BlockFacing.EAST) originOffsetSides = 0f;
-            if (displayFacing == BlockFacing.SOUTH || displayFacing == BlockFacing.WEST) originOffsetSides = -1f;
-            //if (displayFacing == BlockFacing.WEST) originOffsetSides = -1f;
+            if (displayFacing == BlockFacing.NORTH) originOffsetSides = 0f;
+            if (displayFacing == BlockFacing.EAST) originOffsetSides = 0f;
+            if (displayFacing == BlockFacing.SOUTH) originOffsetSides = -1f;
+            if (displayFacing == BlockFacing.WEST) originOffsetSides = -1f;
 
             return originOffsetSides;
         }
@@ -132,11 +121,12 @@ namespace museumcases
         private bool TryPut(ItemSlot slot, BlockSelection blockSel, IPlayer player)
         {
             int index = blockSel.SelectionBoxIndex;
-            bool nowCenterPlacement = inventory.Empty && Math.Abs(blockSel.HitPosition.X - 0.5f) < 0.1 && Math.Abs(blockSel.HitPosition.Z - 0.5f) < 0.1;
+            bool nowCenterPlacement = inventory.Empty && (Math.Abs(blockSel.HitPosition.Z - 0.5f) < 0.1f && Math.Abs(blockSel.HitPosition.Y - 0.5f) < 0.1f)
+                || inventory.Empty && (Math.Abs(blockSel.HitPosition.X - 0.5f) < 0.1f && Math.Abs(blockSel.HitPosition.Y - 0.5f) < 0.1f);
 
             var attr = slot.Itemstack.ItemAttributes;
-            float height = attr?["museumcase"]["minHeight"]?.AsFloat(0.25f) ?? 0;
-            if (height > (this.Block as BlockMuseumCase)?.height)
+            float height = attr?["butterflycase"]["minHeight"]?.AsFloat(0.25f) ?? 0;
+            if (height > (this.Block as BlockButterflyCase)?.height)
             {
                 (Api as ICoreClientAPI)?.TriggerIngameError(this, "tootall", Lang.Get("This item is too tall to fit in this display case."));
                 return false;
@@ -156,11 +146,12 @@ namespace museumcases
                     double dy = (float)player.Entity.Pos.Y - (targetPos.Y + blockSel.HitPosition.Y);
                     double dz = (float)player.Entity.Pos.Z - (targetPos.Z + blockSel.HitPosition.Z);
                     float angleHor = (float)Math.Atan2(dx, dz);
-                    float angleVer = (float)Math.Atan2(-dy, dz);
-                    float deg45 = GameMath.PIHALF/2;
-                    rotations[index] = (int)Math.Round(angleHor / deg45) * deg45;
-                    vertrotations[index] = (int)Math.Round(angleVer * deg45) * deg45;
-                     
+                    //float angleVer = (float)Math.Atan2(-dy, dz);
+                    float deg90 = GameMath.PIHALF;
+
+                    //rotations[index] = (int)Math.Round(angleHor / deg90) * deg90;
+                    //vertrotations[index] = (int)Math.Round(angleVer * deg90) * deg90;
+
 
                     updateMeshes();
 
@@ -207,28 +198,6 @@ namespace museumcases
         }
 
 
-
-        //public override void GetBlockInfo(IPlayer forPlayer, StringBuilder sb)
-        //{
-        //    base.GetBlockInfo(forPlayer, sb);
-
-        //    sb.AppendLine();
-
-        //    if (forPlayer?.CurrentBlockSelection == null) return;
-
-        //    int index = forPlayer.CurrentBlockSelection.SelectionBoxIndex;
-        //    if (index >= inventory.Count) return; // Why can this happen o.O
-
-        //    if (!inventory[index].Empty)
-        //    {
-        //        sb.AppendLine(inventory[index].Itemstack.GetName());
-        //    }
-        //}
-        //Adds the item name to the tooltip box at the top of the screen if the display case has something in it.
-
-
-        
-
         protected override float[][] genTransformationMatrices()
         {
             float[][] tfMatrices = new float[4][];
@@ -244,71 +213,31 @@ namespace museumcases
 
 
                 float originRot = rotAdder();
-                float originMult = rotMultiplier();
+                float originMult = 4f;
                 float originAdd = originOffsetSides();
                 float originAdd2 = originOffsetDepths();
 
-                float degY = rotations[index] * GameMath.RAD2DEG;
+                float degY = rotations[index];// * GameMath.RAD2DEG;
                 float rawdegX = vertrotations[index] * GameMath.RAD2DEG;
 
-                float tilt = tiltAdjust();
-                float degX = tilt;
-
-                float tiltAdjust()
-                {
-                    BlockFacing displayFacing = getFacing();
-                    float adjust = 0f;
-                    if (displayFacing == BlockFacing.NORTH) adjust = GameMath.Clamp(rawdegX, 0, 90) + 45;
-                    if (displayFacing == BlockFacing.EAST) adjust = GameMath.Clamp(rawdegX, 0, 90) + 45;
-                    if (displayFacing == BlockFacing.SOUTH) adjust = GameMath.Clamp(rawdegX, 0, 90) + 45; 
-                    if (displayFacing == BlockFacing.WEST) adjust = GameMath.Clamp(rawdegX, 0, 90) + 45;
-
-                    return adjust;
-                }
+                float degX = GameMath.Clamp(rawdegX, 90, 90);
 
 
-                
-                {
                     if (haveCenterPlacement)
                     {
                         x = 8f / 16f;
                         y = 5.5f / 16f;
-                        z = 4f / 16f;
-
-                        //Base Wall Case
-                        if (Block.Variant["type"] == "wall")
-                        { setBlockState("wallmid"); }
-
-
-                    }
-
-                    if (!haveCenterPlacement)
-                    {
-                        //Base Wall Case
-                        if (Block.Variant["type"] == "wallmid")
-                        { setBlockState("wall"); }
-
                     }
 
                     if (inventory[index].Itemstack != null && inventory[index].Itemstack.Collectible is ItemDeadButterfly)
                         tfMatrices[index] =
                         new Matrixf()
                         .RotateY(originRot)
-                        .Translate(x + originAdd, y + 0.17f, z + originAdd2)
-                        .RotateYDeg(degY + originMult)
+                        .Translate(x + originAdd, y + 0.17f, z + originAdd2 - 0.17f)
+                        .RotateYDeg(degY)// * originMult)
                         .RotateXDeg(degX)
                         .RotateYDeg(42f)
                         .Scale(0.75f, 0.75f, 0.75f)
-                        .Translate(-0.5f, 0, -0.5f)
-                        .Values;
-                    else if (inventory[index].Itemstack != null && inventory[index].Itemstack.Collectible.WildCardMatch("*cheese*") | inventory[index].Itemstack.Collectible.WildCardMatch("*cloth*"))
-                        tfMatrices[index] =
-                        new Matrixf()
-                        .RotateY(originRot)
-                        .Translate(x + originAdd, y + 0.15f, z + originAdd2)
-                        .RotateYDeg(degY + originMult)
-                        .RotateXDeg(degX)
-                        .Scale(0.7f, 0.7f, 0.7f)
                         .Translate(-0.5f, 0, -0.5f)
                         .Values;
                     else
@@ -316,19 +245,16 @@ namespace museumcases
                         new Matrixf()
                         .RotateY(originRot)
                         .Translate(x + originAdd, y + 0.15f, z + originAdd2)
-                        .RotateYDeg(degY + originMult)
+                        .RotateYDeg(degY * originMult)
                         .RotateXDeg(degX)
                         .Scale(0.75f, 0.75f, 0.75f)
                         .Translate(-0.5f, 0, -0.5f)
                         .Values;
 
-                }
-
-               
             }
             return tfMatrices;
         }
-        
+
 
         public override void FromTreeAttributes(Vintagestory.API.Datastructures.ITreeAttribute tree, IWorldAccessor worldForResolving)
         {

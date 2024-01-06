@@ -5,9 +5,9 @@ using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
 
-namespace museumcases
+namespace butterflycases
 {
-    public class BlockMuseumCase : Block
+    public class BlockButterflyCase : Block
     {
         WorldInteraction[] interactions;
         public float height;
@@ -46,16 +46,10 @@ namespace museumcases
 
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
         {
-            BEMuseumCase bemc = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEMuseumCase;
-            BEMuseumCaseSmol bemcs = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEMuseumCaseSmol;
-            BEMuseumCaseWall bemcw = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEMuseumCaseWall;
-            BEMuseumCaseButterfly bemcb = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEMuseumCaseButterfly;
-            BEMuseumCaseTall bemct = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEMuseumCaseTall;
-            if (bemc != null) return bemc.OnInteract(byPlayer, blockSel);
-            if (bemcs != null) return bemcs.OnInteract(byPlayer, blockSel);
-            if (bemcw != null) return bemcw.OnInteract(byPlayer, blockSel);
-            if (bemcb != null) return bemcb.OnInteract(byPlayer, blockSel);
-            if (bemct != null) return bemct.OnInteract(byPlayer, blockSel);
+            BEButterflyBase bebb = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEButterflyBase;
+            BEButterflyCaseWall bebcw = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEButterflyCaseWall;
+            if (bebb != null) return bebb.OnInteract(byPlayer, blockSel);
+            if (bebcw != null) return bebcw.OnInteract(byPlayer, blockSel);
 
             return base.OnBlockInteractStart(world, byPlayer, blockSel);
         }
