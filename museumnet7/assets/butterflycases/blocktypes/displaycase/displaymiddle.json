@@ -1,0 +1,124 @@
+﻿{
+  "code": "displaymiddle",
+  "behaviors": [
+    { "name": "NWOrientable" },
+    { "name": "WrenchOrientable", "properties": { "baseCode": "displaymiddle-{type}"  } }
+  ],
+
+  "attributes": {
+    "height": 0.5
+  },
+  "variantgroups": [
+    { "code": "type", "states": ["segmentmiddle", "segmentmiddlemid"]},
+    {
+      "code": "orientation",
+      "states": [ "ns", "we" ]
+    }
+  ],
+  "class": "BlockMuseumCase",
+  "entityClass": "BEMuseumCase",
+  "creativeinventory": {
+    "general": [ "*-segmentmiddle-ns" ]
+  },
+  "shapeByType": {
+    "*-ns": { "base": "museumcases:block/displaycase/{type}" },
+    "*-we": {
+      "base": "museumcases:block/displaycase/{type}",
+      "rotateY": 90
+    }
+  },
+  "drawtype": "json",
+  "blockmaterial": "Wood",
+  "replaceable": 600,
+  "resistance": 2,
+  "lightAbsorption": 0,
+  "fpHandTransform": {"translation": { "x": 0, "y": 0.5, "z": 0.5 }	},
+  "tpHandTransform": {"translation": { "x": -2.1, "y": -1.8, "z": -1 },"rotation": { "x": -33, "y": 29, "z": -78 } },
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldTpUseAnimation": "twohandplaceblock",
+  "sounds": {
+    "walk": "game:player/buildhigh"
+  },
+  "collisionSelectionBoxesByType": {
+    "*-ns": [
+      {
+        "x1": 0.0625,
+        "y1": 0,
+        "z1": 0.0625,
+        "x2": 0.5,
+        "y2": 0.5,
+        "z2": 0.5
+      },
+      {
+        "x1": 0.5,
+        "y1": 0,
+        "z1": 0.0625,
+        "x2": 0.9375,
+        "y2": 0.5,
+        "z2": 0.5
+      },
+      {
+        "x1": 0.0625,
+        "y1": 0,
+        "z1": 0.5,
+        "x2": 0.5,
+        "y2": 0.5,
+        "z2": 0.9375
+      },
+      {
+        "x1": 0.5,
+        "y1": 0,
+        "z1": 0.5,
+        "x2": 0.9375,
+        "y2": 0.5,
+        "z2": 0.9375
+      }
+    ],
+    "*-we": [
+      {
+        "x1": 0.0625,
+        "y1": 0,
+        "z1": 0.0625,
+        "x2": 0.5,
+        "y2": 0.5,
+        "z2": 0.5
+      },
+      {
+        "x1": 0.5,
+        "y1": 0,
+        "z1": 0.0625,
+        "x2": 0.9375,
+        "y2": 0.5,
+        "z2": 0.5
+      },
+      {
+        "x1": 0.0625,
+        "y1": 0,
+        "z1": 0.5,
+        "x2": 0.5,
+        "y2": 0.5,
+        "z2": 0.9375
+      },
+      {
+        "x1": 0.5,
+        "y1": 0,
+        "z1": 0.5,
+        "x2": 0.9375,
+        "y2": 0.5,
+        "z2": 0.9375
+      }
+    ]
+  },
+
+  "sideopaque": { "all": false },
+  "sideao": { "all": true },
+  "emitsideao": { "all": false },
+  "sidesolid": { "all": false },
+  "drops": [
+    {
+      "type": "block",
+      "code": "displaymiddle-segmentmiddle-ns",
+      "quantity": { "avg": 1 }
+    }
+  ]
+}

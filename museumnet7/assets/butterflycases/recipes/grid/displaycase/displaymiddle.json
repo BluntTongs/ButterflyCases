@@ -1,0 +1,17 @@
+﻿{
+  "ingredientPattern": "E",
+  "ingredients": {
+    "E": {
+      "type": "block",
+      "code": "museumcases:displayendcap-end-north"
+    }
+  },
+  "shapeless": true,
+  "width": 1,
+  "height": 1,
+  "output": {
+    "type": "block",
+    "code": "museumcases:displaymiddle-segmentmiddle-ns",
+    "quantity": 1
+  }
+}

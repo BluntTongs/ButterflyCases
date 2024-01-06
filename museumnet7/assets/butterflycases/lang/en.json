@@ -1,0 +1,16 @@
+﻿{
+	"museumcases:block-displaycase-glass": "Museum Case",
+	"museumcases:block-displaycase-noglass": "Museum Case (No Glass)",
+	"museumcases:block-displayturn-north": "Museum Case Turn",
+	"museumcases:block-displayendcap-north": "Museum Case Endcap",
+	"museumcases:block-displaymiddle-ns": "Museum Case Middle",
+	"museumcases:block-displaycase-glassmid": "Museum Case",
+	"museumcases:block-displaycase-noglassmid": "Museum Case (No Glass)",
+	"museumcases:block-displayendcap-end-north": "Museum Case Endcap",
+	"museumcases:block-displayendcap-endmid-north": "Museum Case Endcap",
+	"museumcases:block-displaymiddle-segmentmiddle-ns": "Museum Case Middle",
+	"museumcases:block-displaymiddle-segmentmiddlemid-ns": "Museum Case Middle",
+	"museumcases:block-displayturn-turn-north": "Museum Case Turn",
+	"museumcases:block-displayturn-turnmid-north": "Museum Case Turn"
+
+}

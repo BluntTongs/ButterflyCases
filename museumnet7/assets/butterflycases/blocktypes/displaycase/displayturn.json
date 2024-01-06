@@ -1,0 +1,203 @@
+﻿  {
+  "code": "displayturn",
+  "behaviors": [
+    { "name": "HorizontalOrientable" },
+    { "name": "WrenchOrientable", "properties": { "baseCode": "displayturn-{type}"  } }
+  ],
+
+  "attributes": {"height": 0.5},
+  "class": "BlockMuseumCase",
+  "entityClass": "BEMuseumCase",
+  "creativeinventory": {
+    "general": [ "*-turn-north" ]
+  },
+  "variantgroups": [
+    { "code": "type", "states": ["turn", "turnmid"]},
+    { "code": "side", "loadFromProperties": "abstract/horizontalorientation"}
+
+  ],
+    "shapebytype": {
+      "*-north": {
+        "base": "museumcases:block/displaycase/{type}",
+        "rotateY": 0
+      },
+      "*-east": {
+        "base": "museumcases:block/displaycase/{type}",
+        "rotateY": 270
+      },
+      "*-south": {
+        "base": "museumcases:block/displaycase/{type}",
+        "rotateY": 180
+      },
+      "*-west": {
+        "base": "museumcases:block/displaycase/{type}",
+        "rotateY": 90
+      }
+    },
+
+
+    "drawtype": "json",
+    "blockmaterial": "Wood",
+    "replaceable": 600,
+    "resistance": 2,
+    "lightAbsorption": 0,
+    "fpHandTransform": {"translation": { "x": 0, "y": 0.5, "z": 0.5 }	},
+    "tpHandTransform": {"translation": { "x": -2.1, "y": -1.8, "z": -1 },"rotation": { "x": -33, "y": 29, "z": -78 } },
+    "heldTpIdleAnimation": "holdbothhandslarge",
+    "heldTpUseAnimation": "twohandplaceblock",
+    "sounds": {
+      "walk": "game:player/buildhigh"
+    },
+
+    "collisionSelectionBoxesByType": {
+      "*-north": [
+        {
+          "x1": 0.0625,
+          "y1": 0,
+          "z1": 0.0625,
+          "x2": 0.5,
+          "y2": 0.5,
+          "z2": 0.5
+        },
+        {
+          "x1": 0.5,
+          "y1": 0,
+          "z1": 0.0625,
+          "x2": 0.9375,
+          "y2": 0.5,
+          "z2": 0.5
+        },
+        {
+          "x1": 0.0625,
+          "y1": 0,
+          "z1": 0.5,
+          "x2": 0.5,
+          "y2": 0.5,
+          "z2": 0.9375
+        },
+        {
+          "x1": 0.5,
+          "y1": 0,
+          "z1": 0.5,
+          "x2": 0.9375,
+          "y2": 0.5,
+          "z2": 0.9375
+        }
+      ],
+      "*-east": [
+        {
+          "x1": 0.0625,
+          "y1": 0,
+          "z1": 0.0625,
+          "x2": 0.5,
+          "y2": 0.5,
+          "z2": 0.5
+        },
+        {
+          "x1": 0.5,
+          "y1": 0,
+          "z1": 0.0625,
+          "x2": 0.9375,
+          "y2": 0.5,
+          "z2": 0.5
+        },
+        {
+          "x1": 0.0625,
+          "y1": 0,
+          "z1": 0.5,
+          "x2": 0.5,
+          "y2": 0.5,
+          "z2": 0.9375
+        },
+        {
+          "x1": 0.5,
+          "y1": 0,
+          "z1": 0.5,
+          "x2": 0.9375,
+          "y2": 0.5,
+          "z2": 0.9375
+        }
+      ],
+      "*-south": [
+        {
+          "x1": 0.0625,
+          "y1": 0,
+          "z1": 0.0625,
+          "x2": 0.5,
+          "y2": 0.5,
+          "z2": 0.5
+        },
+        {
+          "x1": 0.5,
+          "y1": 0,
+          "z1": 0.0625,
+          "x2": 0.9375,
+          "y2": 0.5,
+          "z2": 0.5
+        },
+        {
+          "x1": 0.0625,
+          "y1": 0,
+          "z1": 0.5,
+          "x2": 0.5,
+          "y2": 0.5,
+          "z2": 0.9375
+        },
+        {
+          "x1": 0.5,
+          "y1": 0,
+          "z1": 0.5,
+          "x2": 0.9375,
+          "y2": 0.5,
+          "z2": 0.9375
+        }
+      ],
+      "*-west": [
+        {
+          "x1": 0.0625,
+          "y1": 0,
+          "z1": 0.0625,
+          "x2": 0.5,
+          "y2": 0.5,
+          "z2": 0.5
+        },
+        {
+          "x1": 0.5,
+          "y1": 0,
+          "z1": 0.0625,
+          "x2": 0.9375,
+          "y2": 0.5,
+          "z2": 0.5
+        },
+        {
+          "x1": 0.0625,
+          "y1": 0,
+          "z1": 0.5,
+          "x2": 0.5,
+          "y2": 0.5,
+          "z2": 0.9375
+        },
+        {
+          "x1": 0.5,
+          "y1": 0,
+          "z1": 0.5,
+          "x2": 0.9375,
+          "y2": 0.5,
+          "z2": 0.9375
+        }
+      ]
+    },
+    "sideopaque": { "all": false },
+    "sideao": { "all": true },
+    "emitsideao": { "all": false },
+    "sidesolid": { "all": false },
+    "drops": [
+      {
+        "type": "block",
+        "code": "displayturn-turn-north",
+        "quantity": { "avg": 1 }
+      }
+    ]
+        
+}
+  

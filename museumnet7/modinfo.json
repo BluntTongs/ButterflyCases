@@ -1,0 +1,13 @@
+{
+    "type": "code",
+    "modid": "museumcases",
+    "name": "Museum Cases",
+    "authors": [
+        "BluntTongs"
+    ],
+    "description": "Adds display cases befitting of a lovely museum!",
+    "version": "1.0.0",
+    "dependencies": {
+        "game": "1.18.15"
+    }
+}
