@@ -147,7 +147,7 @@ namespace butterflycases
                     double dz = (float)player.Entity.Pos.Z - (targetPos.Z + blockSel.HitPosition.Z);
                     float angleHor = (float)Math.Atan2(dx, dz);
                     //float angleVer = (float)Math.Atan2(-dy, dz);
-                    float deg90 = GameMath.PIHALF;
+                    //float deg90 = GameMath.PIHALF;
 
                     //rotations[index] = (int)Math.Round(angleHor / deg90) * deg90;
                     //vertrotations[index] = (int)Math.Round(angleVer * deg90) * deg90;
@@ -213,13 +213,14 @@ namespace butterflycases
 
 
                 float originRot = rotAdder();
-                float originMult = 4f;
+                //float originMult = 4f;
                 float originAdd = originOffsetSides();
                 float originAdd2 = originOffsetDepths();
 
-                float degY = rotations[index];// * GameMath.RAD2DEG;
+                float rawdegY = rotations[index] * GameMath.RAD2DEG;
                 float rawdegX = vertrotations[index] * GameMath.RAD2DEG;
 
+                float degY = GameMath.Clamp(rawdegY, 0, 0);
                 float degX = GameMath.Clamp(rawdegX, 90, 90);
 
 
@@ -234,20 +235,19 @@ namespace butterflycases
                         new Matrixf()
                         .RotateY(originRot)
                         .Translate(x + originAdd, y + 0.17f, z + originAdd2 - 0.17f)
-                        .RotateYDeg(degY)// * originMult)
                         .RotateXDeg(degX)
                         .RotateYDeg(42f)
                         .Scale(0.85f, 0.85f, 0.85f)
                         .Translate(-0.5f, 0, -0.5f)
                         .Values;
                     else
-                        tfMatrices[index] =
+                       tfMatrices[index] =
                         new Matrixf()
                         .RotateY(originRot)
-                        .Translate(x + originAdd, y + 0.15f, z + originAdd2)
-                        .RotateYDeg(degY * originMult)
-                        .RotateXDeg(degX)
-                        .Scale(0.75f, 0.75f, 0.75f)
+                        .Translate(x + originAdd - 0.01f, y + 0.17f, z + originAdd2 - 0.17f)
+                        .RotateXDeg(degX - 4f)
+                        .RotateYDeg(42f)
+                        .Scale(0.80f, 0.75f, 0.75f)
                         .Translate(-0.5f, 0, -0.5f)
                         .Values;
 

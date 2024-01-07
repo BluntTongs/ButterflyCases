@@ -17,6 +17,8 @@ namespace butterflycases
             api.RegisterBlockEntityClass("BEButterflyBase", typeof(BEButterflyBase));
             api.RegisterBlockEntityClass("BEButterflyCaseSlanted", typeof(BEButterflyCaseSlanted));
             api.RegisterBlockEntityClass("BEButterflyCaseWall", typeof(BEButterflyCaseWall));
+            api.RegisterBlockEntityClass("BEButterflyCaseWallSmall", typeof(BEButterflyCaseWallSmall));
+            api.RegisterBlockEntityClass("BEButterflyCaseDome", typeof(BEButterflyCaseDome));
 
             api.Logger.Notification("Butterfly Cases loaded: " + api.Side);
         }

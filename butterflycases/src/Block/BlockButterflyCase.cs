@@ -49,9 +49,13 @@ namespace butterflycases
             BEButterflyBase bebb = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEButterflyBase;
             BEButterflyCaseSlanted bebcs = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEButterflyCaseSlanted;
             BEButterflyCaseWall bebcw = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEButterflyCaseWall;
+            BEButterflyCaseWallSmall bebcws = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEButterflyCaseWallSmall;
+            BEButterflyCaseDome bebcd = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEButterflyCaseDome;
             if (bebb != null) return bebb.OnInteract(byPlayer, blockSel);
             if (bebcs != null) return bebcs.OnInteract(byPlayer, blockSel);
             if (bebcw != null) return bebcw.OnInteract(byPlayer, blockSel);
+            if (bebcws != null) return bebcws.OnInteract(byPlayer, blockSel);
+            if(bebcd != null) return bebcd.OnInteract(byPlayer, blockSel);
 
             return base.OnBlockInteractStart(world, byPlayer, blockSel);
         }

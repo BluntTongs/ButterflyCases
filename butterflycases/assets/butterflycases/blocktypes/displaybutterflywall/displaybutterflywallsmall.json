@@ -1,0 +1,135 @@
+﻿{
+  "code": "displaybutterflywallsmall",
+  "behaviors": [ { "name": "HorizontalOrientable" } ],
+  "variantgroups": [
+    {
+      "code": "side",
+      "loadFromProperties": "abstract/horizontalorientation"
+    }
+  ],
+  "attributes": {
+    "height": 1,
+    "width": 0.5
+  },
+  "class": "BlockButterflyCase",
+  "entityClass": "BEButterflyCaseWallSmall",
+  "creativeinventory": {
+    "general": [ "*-north" ]
+  },
+  "shapebytype": {
+    "*-north": {
+      "base": "butterflycases:block/displaybutterflywall/displaybutterflywallsmall",
+      "rotateY": 0
+    },
+    "*-east": {
+      "base": "butterflycases:block/displaybutterflywall/displaybutterflywallsmall",
+      "rotateY": 270
+    },
+    "*-south": {
+      "base": "butterflycases:block/displaybutterflywall/displaybutterflywallsmall",
+      "rotateY": 180
+    },
+    "*-west": {
+      "base": "butterflycases:block/displaybutterflywall/displaybutterflywallsmall",
+      "rotateY": 90
+    }
+  },
+  "drawtype": "json",
+  "blockmaterial": "Wood",
+  "replaceable": 600,
+  "resistance": 2,
+  "lightAbsorption": 0,
+  "fpHandTransform": {
+    "translation": {
+      "x": 0,
+      "y": 0.5,
+      "z": 0.5
+    }
+  },
+  "tpHandTransform": {
+    "translation": {
+      "x": -2.1,
+      "y": -1.8,
+      "z": -1
+    },
+    "rotation": {
+      "x": -33,
+      "y": 29,
+      "z": -78
+    }
+  },
+  "guiTransform": {
+    "rotation": {
+      "x": -22.6,
+      "y": 138,
+      "z": 0
+    },
+    "origin": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0
+    },
+    "scale": 1.14
+  },
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldTpUseAnimation": "twohandplaceblock",
+  "sounds": {
+    "walk": "game:player/buildhigh"
+  },
+  "collisionSelectionBoxesByType": {
+    "*-north": [
+      {
+        "x1": 0.219,
+        "y1": 0.2175,
+        "z1": 0,
+        "x2": 0.781,
+        "y2": 0.779,
+        "z2": 0.1691
+      }
+    ],
+    "*-east": [
+      {
+        "rotateY": 270,
+        "x1": 0.219,
+        "y1": 0.2175,
+        "z1": 0,
+        "x2": 0.781,
+        "y2": 0.779,
+        "z2": 0.1691
+      }      
+    ],
+    "*-south": [
+      {
+        "rotateY": 180,
+        "x1": 0.219,
+        "y1": 0.2175,
+        "z1": 0,
+        "x2": 0.781,
+        "y2": 0.779,
+        "z2": 0.1691
+      }
+    ],
+    "*-west": [
+      {
+        "rotateY": 90,
+        "x1": 0.219,
+        "y1": 0.2175,
+        "z1": 0,
+        "x2": 0.781,
+        "y2": 0.779,
+        "z2": 0.1691
+      }
+    ]
+  },
+  "sideopaque": { "all": false },
+  "sideao": { "all": true },
+  "emitsideao": { "all": false },
+  "sidesolid": { "all": false },
+  "drops": [
+    {
+      "type": "block",
+      "code": "displaybutterflywallsmall-north",
+      "quantity": { "avg": 1 }
+    }
+  ]
+}

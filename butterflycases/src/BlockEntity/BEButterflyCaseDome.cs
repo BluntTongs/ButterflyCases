@@ -10,9 +10,9 @@ using Vintagestory.ServerMods.NoObf;
 
 namespace butterflycases
 {
-    public class BEButterflyCaseSlanted : BEButterflyBase, IRotatable
+    public class BEButterflyCaseDome : BEButterflyBase, IRotatable
     {
-        public override string InventoryClassName => "butterflycaseslanted";
+        public override string InventoryClassName => "butterflycasedome";
         //protected InventoryGeneric inventory;
         //public override InventoryBase Inventory => inventory;
 
@@ -21,9 +21,9 @@ namespace butterflycases
         //float[] vertrotations = new float[4];
 
 
-        public BEButterflyCaseSlanted()
+        public BEButterflyCaseDome()
         {
-            inventory = new InventoryDisplayed(this, 4, "butterflycaseslanted-0", null, null);
+            inventory = new InventoryDisplayed(this, 1, "butterflycasedome-0", null, null);
         }
 
         //internal bool OnInteract(IPlayer byPlayer, BlockSelection blockSel)
@@ -200,19 +200,20 @@ namespace butterflycases
 
         protected override float[][] genTransformationMatrices()
         {
-            float[][] tfMatrices = new float[4][];
+            float[][] tfMatrices = new float[1][];
 
 
 
-            for (int index = 0; index < 4; index++)
+            for (int index = 0; index < 1; index++)
             {
 
-                float x = (index % 2 == 0) ? 4.5f / 16f : 11.5f / 16f;
-                float y = (index < 2) ? 6f / 16f : 1f / 16f;
-                float z = (index > 1) ? 15f / 16f : 10f / 16f;
+                float x = 8.3f / 16f;
+                float y = 5 / 16f;
+                float z = 11 / 16f;
 
 
                 float originRot = rotAdder();
+                //float originMult = 4f;
                 float originAdd = originOffsetSides();
                 float originAdd2 = originOffsetDepths();
 
@@ -243,11 +244,11 @@ namespace butterflycases
                         tfMatrices[index] =
                         new Matrixf()
                         .RotateY(originRot)
-                        .Translate(x + originAdd, y + 0.17f, z + originAdd2 - 0.17f)
+                        .Translate(x + originAdd - 0.01f, y + 0.17f, z + originAdd2 - 0.17f)
                         //.RotateYDeg(degY)
-                        .RotateXDeg(degX)
+                        .RotateXDeg(degX - 4f)
                         .RotateYDeg(42f)
-                        .Scale(0.85f, 0.85f, 0.85f)
+                        .Scale(0.80f, 0.75f, 0.75f)
                         .Translate(-0.5f, 0, -0.5f)
                         .Values;
 
@@ -280,41 +281,33 @@ namespace butterflycases
         public override void ToTreeAttributes(Vintagestory.API.Datastructures.ITreeAttribute tree)
         {
             base.ToTreeAttributes(tree);
-
-            tree.SetBool("haveCenterPlacement", haveCenterPlacement);
+            
             tree.SetFloat("rotation0", rotations[0]);
-            tree.SetFloat("rotation1", rotations[1]);
-            tree.SetFloat("rotation2", rotations[2]);
-            tree.SetFloat("rotation3", rotations[3]);
-
             tree.SetFloat("vertrotation0", vertrotations[0]);
-            tree.SetFloat("vertrotation1", vertrotations[1]);
-            tree.SetFloat("vertrotation2", vertrotations[2]);
-            tree.SetFloat("vertrotation3", vertrotations[3]);
         }
 
 
         new public void OnTransformed(ITreeAttribute tree, int degreeRotation, EnumAxis? flipAxis)
         {
-            var rot = new int[] { 0, 1, 3, 2 };
-            var verrot = new int[] { 0, 1, 3, 2 };
-            var rots = new float[4];
-            var verrots = new float[4];
+            var rot = new int[] { 0 };
+            var verrot = new int[] { 0 };
+            var rots = new float[1];
+            var verrots = new float[1];
             var treeAttribute = tree.GetTreeAttribute("inventory");
             inventory.FromTreeAttributes(treeAttribute);
-            var inv = new ItemSlot[4];
-            var start = (degreeRotation / 90) % 4;
+            var inv = new ItemSlot[1];
+            var start = (degreeRotation / 90) % 1;
 
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i < 1; i++)
             {
                 rots[i] = tree.GetFloat("rotation" + i);
                 verrots[i] = tree.GetFloat("vertrotation" + i);
                 inv[i] = inventory[i];
             }
 
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i < 1; i++)
             {
-                var index = GameMath.Mod(i - start, 4);
+                var index = GameMath.Mod(i - start, 1);
                 // swap inventory and rotations with the new ones
                 rotations[rot[i]] = rots[rot[index]] - degreeRotation * GameMath.DEG2RAD;
                 vertrotations[verrot[i]] = verrots[verrot[index]] - degreeRotation * GameMath.DEG2RAD;

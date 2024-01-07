@@ -11,13 +11,21 @@ namespace butterflycases
 {
     //The mother of all butterfly cases. It's much "cleaner" to simply inherit from this one class and make adjustments down the river than it is to have a lot of repeated individual code.
     //
-    public class BEButterflyBase : BlockEntityDisplay, IRotatable
+    public class BEButterflyBase : BlockEntityDisplay, IRotatable, IWrenchOrientable
     {
         public override string InventoryClassName => "butterflybase";
         protected InventoryGeneric inventory;
         public override InventoryBase Inventory => inventory;
 
         public bool haveCenterPlacement;
+
+        BlockFacing facing = BlockFacing.NORTH;
+        public void Rotate(EntityAgent byEntity, BlockSelection blockSel, int dir)
+        {
+            facing = dir > 0 ? facing.GetCCW() : facing.GetCW();
+            Api.World.BlockAccessor.ExchangeBlock(Api.World.GetBlock(Block.CodeWithVariant("side", facing.Code)).Id, Pos);
+            MarkDirty(true);
+        }
 
         public float[] rotations = new float[8];
         public float[] vertrotations = new float[8];
@@ -53,8 +61,9 @@ namespace butterflycases
             else
             {
                 CollectibleObject colObj = slot.Itemstack.Collectible;
+                if (colObj is ItemWrench) return false;
                 if (colObj.Attributes != null && colObj.Attributes["displaycaseable"].AsBool(false) == true)
-                {
+                    {
                     AssetLocation sound = slot.Itemstack?.Block?.Sounds?.Place;
 
                     if (TryPut(slot, blockSel, byPlayer))
@@ -178,7 +187,7 @@ namespace butterflycases
 
             if (!inventory[index].Empty)
             {
-                sb.AppendLine(inventory[index].Itemstack.GetName());
+                sb.AppendLine(inventory[index].Itemstack.GetName().Replace("Dead ",""));
             }
         }
         //Adds the item name to the tooltip box at the top of the screen if the display case has something in it.
