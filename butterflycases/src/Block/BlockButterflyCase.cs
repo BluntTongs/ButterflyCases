@@ -47,8 +47,10 @@ namespace butterflycases
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
         {
             BEButterflyBase bebb = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEButterflyBase;
+            BEButterflyCaseSlanted bebcs = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEButterflyCaseSlanted;
             BEButterflyCaseWall bebcw = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BEButterflyCaseWall;
             if (bebb != null) return bebb.OnInteract(byPlayer, blockSel);
+            if (bebcs != null) return bebcs.OnInteract(byPlayer, blockSel);
             if (bebcw != null) return bebcw.OnInteract(byPlayer, blockSel);
 
             return base.OnBlockInteractStart(world, byPlayer, blockSel);

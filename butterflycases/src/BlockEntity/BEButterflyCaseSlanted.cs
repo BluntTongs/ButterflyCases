@@ -10,9 +10,9 @@ using Vintagestory.ServerMods.NoObf;
 
 namespace butterflycases
 {
-    public class BEButterflyCaseWall : BEButterflyBase, IRotatable
+    public class BEButterflyCaseSlanted : BEButterflyBase, IRotatable
     {
-        public override string InventoryClassName => "butterflycasewall";
+        public override string InventoryClassName => "butterflycaseslanted";
         //protected InventoryGeneric inventory;
         //public override InventoryBase Inventory => inventory;
 
@@ -21,9 +21,9 @@ namespace butterflycases
         //float[] vertrotations = new float[4];
 
 
-        public BEButterflyCaseWall()
+        public BEButterflyCaseSlanted()
         {
-            inventory = new InventoryDisplayed(this, 4, "butterflycasewall-0", null, null);
+            inventory = new InventoryDisplayed(this, 4, "butterflycaseslanted-0", null, null);
         }
 
         //internal bool OnInteract(IPlayer byPlayer, BlockSelection blockSel)
@@ -208,19 +208,18 @@ namespace butterflycases
             {
 
                 float x = (index % 2 == 0) ? 4.5f / 16f : 11.5f / 16f;
-                float y = (index < 2) ? 9f / 16f : 2f / 16f;
-                float z = (index > 1) ? 4f / 16f : 4f / 16f;
+                float y = (index < 2) ? 6f / 16f : 1f / 16f;
+                float z = (index > 1) ? 15f / 16f : 10f / 16f;
 
 
                 float originRot = rotAdder();
-                float originMult = 4f;
                 float originAdd = originOffsetSides();
                 float originAdd2 = originOffsetDepths();
 
                 float degY = rotations[index];// * GameMath.RAD2DEG;
                 float rawdegX = vertrotations[index] * GameMath.RAD2DEG;
 
-                float degX = GameMath.Clamp(rawdegX, 90, 90);
+                float degX = GameMath.Clamp(rawdegX, 45, 45);
 
 
                     if (haveCenterPlacement)
@@ -234,7 +233,7 @@ namespace butterflycases
                         new Matrixf()
                         .RotateY(originRot)
                         .Translate(x + originAdd, y + 0.17f, z + originAdd2 - 0.17f)
-                        .RotateYDeg(degY)// * originMult)
+                        .RotateYDeg(degY)
                         .RotateXDeg(degX)
                         .RotateYDeg(42f)
                         .Scale(0.85f, 0.85f, 0.85f)
@@ -244,10 +243,11 @@ namespace butterflycases
                         tfMatrices[index] =
                         new Matrixf()
                         .RotateY(originRot)
-                        .Translate(x + originAdd, y + 0.15f, z + originAdd2)
-                        .RotateYDeg(degY * originMult)
+                        .Translate(x + originAdd, y + 0.17f, z + originAdd2 - 0.17f)
+                        .RotateYDeg(degY)
                         .RotateXDeg(degX)
-                        .Scale(0.75f, 0.75f, 0.75f)
+                        .RotateYDeg(42f)
+                        .Scale(0.85f, 0.85f, 0.85f)
                         .Translate(-0.5f, 0, -0.5f)
                         .Values;
 
