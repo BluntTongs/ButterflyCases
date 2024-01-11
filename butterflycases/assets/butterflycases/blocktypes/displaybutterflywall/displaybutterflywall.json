@@ -3,10 +3,19 @@
   "behaviors": [ { "name": "HorizontalOrientable" } ],
   "variantgroups": [
     {
+      "code": "type",
+      "states": [ "black" ],
+      "loadFromProperties": "game:block/wood"
+    },
+    {
       "code": "side",
       "loadFromProperties": "abstract/horizontalorientation"
     }
   ],
+
+  "textures": {
+    "oak": { "base": "block/woodvariants/{type}*" }
+  },
   "attributes": {
     "height": 1,
     "width": 0.5

@@ -10,9 +10,9 @@ using Vintagestory.ServerMods.NoObf;
 
 namespace butterflycases
 {
-    public class BEButterflyCaseWallSmall : BEButterflyBase, IRotatable
+    public class BEButterflyCaseSlantedSmall : BEButterflyBase, IRotatable
     {
-        public override string InventoryClassName => "butterflycasewallsmall";
+        public override string InventoryClassName => "butterflycaseslantedsmall";
         //protected InventoryGeneric inventory;
         //public override InventoryBase Inventory => inventory;
 
@@ -21,9 +21,9 @@ namespace butterflycases
         //float[] vertrotations = new float[4];
 
 
-        public BEButterflyCaseWallSmall()
+        public BEButterflyCaseSlantedSmall()
         {
-            inventory = new InventoryDisplayed(this, 1, "butterflycasewallsmall-0", null, null);
+            inventory = new InventoryDisplayed(this, 1, "butterflycaseslantedsmall-0", null, null);
         }
 
         //internal bool OnInteract(IPlayer byPlayer, BlockSelection blockSel)
@@ -121,8 +121,7 @@ namespace butterflycases
         private bool TryPut(ItemSlot slot, BlockSelection blockSel, IPlayer player)
         {
             int index = blockSel.SelectionBoxIndex;
-            bool nowCenterPlacement = inventory.Empty && (Math.Abs(blockSel.HitPosition.Z - 0.5f) < 0.1f && Math.Abs(blockSel.HitPosition.Y - 0.5f) < 0.1f)
-                || inventory.Empty && (Math.Abs(blockSel.HitPosition.X - 0.5f) < 0.1f && Math.Abs(blockSel.HitPosition.Y - 0.5f) < 0.1f);
+            
 
             var attr = slot.Itemstack.ItemAttributes;
             float height = attr?["butterflycase"]["minHeight"]?.AsFloat(0.25f) ?? 0;
@@ -131,9 +130,6 @@ namespace butterflycases
                 (Api as ICoreClientAPI)?.TriggerIngameError(this, "tootall", Lang.Get("This item is too tall to fit in this display case."));
                 return false;
             }
-
-
-            haveCenterPlacement = nowCenterPlacement;
 
             if (inventory[index].Empty)
             {
@@ -207,9 +203,9 @@ namespace butterflycases
             for (int index = 0; index < 1; index++)
             {
 
-                float x = 8.3f / 16f;
-                float y = 5 / 16f;
-                float z = 4 / 16f;
+                float x = 8 / 16f;
+                float y = 0.75f / 16f;
+                float z = 12f / 16f;
 
 
                 float originRot = rotAdder();
@@ -220,20 +216,15 @@ namespace butterflycases
                 float degY = rotations[index];// * GameMath.RAD2DEG;
                 float rawdegX = vertrotations[index] * GameMath.RAD2DEG;
 
-                float degX = GameMath.Clamp(rawdegX, 90, 90);
+                float degX = GameMath.Clamp(rawdegX, 45, 45);
 
-
-                    if (haveCenterPlacement)
-                    {
-                        x = 8f / 16f;
-                        y = 5.5f / 16f;
-                    }
+                                   
 
                     if (inventory[index].Itemstack != null && inventory[index].Itemstack.Collectible is ItemDeadButterfly)
                         tfMatrices[index] =
                         new Matrixf()
                         .RotateY(originRot)
-                        .Translate(x + originAdd, y + 0.17f, z + originAdd2 - 0.17f)
+                        .Translate(x + originAdd + 0.02f, y + 0.17f, z + originAdd2 - 0.17f)
                         //.RotateYDeg(degY)
                         .RotateXDeg(degX)
                         .RotateYDeg(42f)
@@ -261,7 +252,6 @@ namespace butterflycases
         {
             base.FromTreeAttributes(tree, worldForResolving);
 
-            haveCenterPlacement = tree.GetBool("haveCenterPlacement");
             rotations = new float[]
             {
                 tree.GetFloat("rotation0"),

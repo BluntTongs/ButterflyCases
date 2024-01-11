@@ -45,6 +45,7 @@
   <None Remove="assets\butterflycases\blocktypes\displaybutterflywall\displaybutterflywall.json" />
   <None Remove="assets\butterflycases\blocktypes\displaybutterfly\displaybutterflydome.json" />
   <None Remove="assets\butterflycases\blocktypes\displaybutterfly\displaybutterflyslanted.json" />
+  <None Remove="assets\butterflycases\blocktypes\displaybutterfly\displaybutterflyslantedsmall.json" />
   <Content Include="modinfo.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   </Content>
