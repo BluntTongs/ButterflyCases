@@ -1,8 +1,6 @@
 ﻿{
   "code": "displaybutterflydome",
-  "behaviors": [
-    { "name": "HorizontalOrientable" }
-  ],
+  "behaviors": [ { "name": "HorizontalOrientable" }, { "name": "WrenchOrientable", "properties": { "baseCode": "displaybutterflydome-{type}" } } ],
   "variantgroups": [
     {
       "code": "type",
@@ -20,7 +18,9 @@
   "attributes": {
     "height": 1,
     "width": 0.5,
-    "defaultType": "butterback"
+	handbook: {
+			groupBy: ["displaybutterflydome-*"]
+		},
   },
   "class": "BlockButterflyCase",
   "entityClass": "BEButterflyCaseDome",
@@ -140,7 +140,7 @@
   "drops": [
     {
       "type": "block",
-      "code": "displaybutterflydome-north-{type}",
+      "code": "displaybutterflydome-{type}-north",
       "quantity": { "avg": 1 }
     }
   ]

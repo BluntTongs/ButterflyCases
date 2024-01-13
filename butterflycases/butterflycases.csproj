@@ -46,6 +46,7 @@
   <None Remove="assets\butterflycases\blocktypes\displaybutterfly\displaybutterflydome.json" />
   <None Remove="assets\butterflycases\blocktypes\displaybutterfly\displaybutterflyslanted.json" />
   <None Remove="assets\butterflycases\blocktypes\displaybutterfly\displaybutterflyslantedsmall.json" />
+  <None Remove="assets\butterflycases\recipes\grid\butterflydisplays.json" />
   <Content Include="modinfo.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   </Content>
@@ -53,7 +54,6 @@
 
 <ItemGroup>
   <Folder Include="assets\butterflycases\lang\" />
-  <Folder Include="assets\butterflycases\recipes\grid\" />
 </ItemGroup>
 
 </Project>

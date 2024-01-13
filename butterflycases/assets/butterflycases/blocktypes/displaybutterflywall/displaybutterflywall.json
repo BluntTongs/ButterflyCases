@@ -12,13 +12,15 @@
       "loadFromProperties": "abstract/horizontalorientation"
     }
   ],
-
   "textures": {
     "oak": { "base": "block/woodvariants/{type}*" }
   },
   "attributes": {
     "height": 1,
-    "width": 0.5
+    "width": 0.5,
+	"handbook": {
+      "groupBy": [ "displaybutterflywall-*" ]
+    },
   },
   "class": "BlockButterflyCase",
   "entityClass": "BEButterflyCaseWall",
@@ -243,7 +245,7 @@
   "drops": [
     {
       "type": "block",
-      "code": "displaybutterflywall-north",
+      "code": "displaybutterflywall-{type}-north",
       "quantity": { "avg": 1 }
     }
   ]

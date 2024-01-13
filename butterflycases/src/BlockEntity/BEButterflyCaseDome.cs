@@ -142,10 +142,10 @@ namespace butterflycases
                 if (moved > 0)
                 {
                     BlockPos targetPos = blockSel.DidOffset ? blockSel.Position.AddCopy(blockSel.Face.Opposite) : blockSel.Position;
-                    double dx = player.Entity.Pos.X - (targetPos.X + blockSel.HitPosition.X);
-                    double dy = (float)player.Entity.Pos.Y - (targetPos.Y + blockSel.HitPosition.Y);
-                    double dz = (float)player.Entity.Pos.Z - (targetPos.Z + blockSel.HitPosition.Z);
-                    float angleHor = (float)Math.Atan2(dx, dz);
+                    //double dx = player.Entity.Pos.X - (targetPos.X + blockSel.HitPosition.X);
+                    //double dy = (float)player.Entity.Pos.Y - (targetPos.Y + blockSel.HitPosition.Y);
+                    //double dz = (float)player.Entity.Pos.Z - (targetPos.Z + blockSel.HitPosition.Z);
+                    //float angleHor = (float)Math.Atan2(dx, dz);
                     //float angleVer = (float)Math.Atan2(-dy, dz);
                     //float deg90 = GameMath.PIHALF;
 
@@ -244,7 +244,7 @@ namespace butterflycases
                         tfMatrices[index] =
                         new Matrixf()
                         .RotateY(originRot)
-                        .Translate(x + originAdd - 0.01f, y + 0.2f, z + originAdd2 - 0.2f)
+                        .Translate(x + originAdd - 0.01f, y + 0.15f, z + originAdd2 - 0.2f)
                         //.RotateYDeg(degY)
                         .RotateXDeg(degX - 4f)
                         .RotateYDeg(42f)

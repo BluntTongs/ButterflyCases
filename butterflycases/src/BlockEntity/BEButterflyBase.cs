@@ -9,9 +9,7 @@ using Vintagestory.GameContent;
 
 namespace butterflycases
 {
-    //The mother of all butterfly cases. It's much "cleaner" to simply inherit from this one class and make adjustments down the river than it is to have a lot of repeated individual code.
-    //
-    public class BEButterflyBase : BlockEntityDisplay, IRotatable, IWrenchOrientable
+    public class BEButterflyBase : BlockEntityDisplay, IRotatable
     {
         public override string InventoryClassName => "butterflybase";
         protected InventoryGeneric inventory;
@@ -20,12 +18,6 @@ namespace butterflycases
         public bool haveCenterPlacement;
 
         BlockFacing facing = BlockFacing.NORTH;
-        public void Rotate(EntityAgent byEntity, BlockSelection blockSel, int dir)
-        {
-            facing = dir > 0 ? facing.GetCCW() : facing.GetCW();
-            Api.World.BlockAccessor.ExchangeBlock(Api.World.GetBlock(Block.CodeWithVariant("side", facing.Code)).Id, Pos);
-            MarkDirty(true);
-        }
 
         public float[] rotations = new float[8];
         public float[] vertrotations = new float[8];
