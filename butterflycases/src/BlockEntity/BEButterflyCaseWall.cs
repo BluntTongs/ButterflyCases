@@ -13,57 +13,13 @@ namespace butterflycases
     public class BEButterflyCaseWall : BEButterflyBase, IRotatable
     {
         public override string InventoryClassName => "butterflycasewall";
-        //protected InventoryGeneric inventory;
-        //public override InventoryBase Inventory => inventory;
-
-        //bool haveCenterPlacement;
-        //float[] rotations = new float[4];
-        //float[] vertrotations = new float[4];
-
 
         public BEButterflyCaseWall()
         {
             inventory = new InventoryDisplayed(this, 4, "butterflycasewall-0", null, null);
         }
 
-        //internal bool OnInteract(IPlayer byPlayer, BlockSelection blockSel)
-        //{
-        //    ItemSlot slot = byPlayer.InventoryManager.ActiveHotbarSlot;
-
-
-        //    if (slot.Empty)
-        //    {
-        //        if (TryTake(byPlayer, blockSel))
-        //        {
-        //            return true;
-        //        }
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        CollectibleObject colObj = slot.Itemstack.Collectible;
-        //        if (colObj.Attributes != null && colObj.Attributes["displaycaseable"].AsBool(false) == true)
-        //        {
-        //            AssetLocation sound = slot.Itemstack?.Block?.Sounds?.Place;
-
-        //            if (TryPut(slot, blockSel, byPlayer))
-        //            {
-        //                Api.World.PlaySoundAt(sound != null ? sound : new AssetLocation("sounds/player/build"), byPlayer.Entity, byPlayer, true, 16);
-        //                return true;
-        //            }
-
-        //            return false;
-        //        }
-
-        //        (Api as ICoreClientAPI)?.TriggerIngameError(this, "doesnotfit", Lang.Get("This item does not fit into the display case."));
-        //        return true;
-        //    }
-        //}
-
-
-
-
-        new public void setBlockState(string state)
+        new public void SetBlockState(string state)
         {
             AssetLocation loc = Block.CodeWithVariant("type", state);
             Block block = Api.World.GetBlock(loc);
@@ -72,131 +28,44 @@ namespace butterflycases
             Api.World.BlockAccessor.ExchangeBlock(block.Id, Pos);
             this.Block = block;
         }
-        BlockFacing getFacing()
+        BlockFacing GetFacing()
         {
             Block block = Api.World.BlockAccessor.GetBlock(Pos);
             BlockFacing facing = BlockFacing.FromCode(block.LastCodePart());
             return facing == null ? BlockFacing.NORTH : facing;
         }
-        public float rotAdder()
+        public float RotAdder()
         {
 
-            BlockFacing displayFacing = getFacing();
-            float rotAdder = 1;
-            if (displayFacing == BlockFacing.NORTH) rotAdder = 0f;
-            if (displayFacing == BlockFacing.EAST) rotAdder = 4.71f;
-            if (displayFacing == BlockFacing.SOUTH) rotAdder = 3.14f;
-            if (displayFacing == BlockFacing.WEST) rotAdder = 1.57f;
+            BlockFacing displayFacing = GetFacing();
+            float RotAdder = 0;
+            if (displayFacing == BlockFacing.EAST) RotAdder = 4.71f;
+            if (displayFacing == BlockFacing.SOUTH) RotAdder = 3.14f;
+            if (displayFacing == BlockFacing.WEST) RotAdder = 1.57f;
 
-            return rotAdder;
+            return RotAdder;
 
         }
         
-        public float originOffsetSides()
+        public float OriginOffsetSides()
         {
-            BlockFacing displayFacing = getFacing();
-            float originOffsetSides = 0f;
-            if (displayFacing == BlockFacing.NORTH) originOffsetSides = 0f;
-            if (displayFacing == BlockFacing.EAST) originOffsetSides = 0f;
-            if (displayFacing == BlockFacing.SOUTH) originOffsetSides = -1f;
-            if (displayFacing == BlockFacing.WEST) originOffsetSides = -1f;
+            BlockFacing displayFacing = GetFacing();
+            float OriginOffsetSides = 0f;
+            if (displayFacing == BlockFacing.SOUTH) OriginOffsetSides = -1f;
+            if (displayFacing == BlockFacing.WEST) OriginOffsetSides = -1f;
 
-            return originOffsetSides;
+            return OriginOffsetSides;
         }
 
-        public float originOffsetDepths()
+        public float OriginOffsetDepths()
         {
-            BlockFacing displayFacing = getFacing();
-            float originOffsetDepths = 0f;
-            if (displayFacing == BlockFacing.NORTH) originOffsetDepths = 0f;
-            if (displayFacing == BlockFacing.EAST) originOffsetDepths = -1f;
-            if (displayFacing == BlockFacing.SOUTH) originOffsetDepths = -1f;
-            if (displayFacing == BlockFacing.WEST) originOffsetDepths = 0f;
+            BlockFacing displayFacing = GetFacing();
+            float OriginOffsetDepths = 0f;
+            if (displayFacing == BlockFacing.EAST) OriginOffsetDepths = -1f;
+            if (displayFacing == BlockFacing.SOUTH) OriginOffsetDepths = -1f;
 
-            return originOffsetDepths;
+            return OriginOffsetDepths;
         }
-
-
-
-        private bool TryPut(ItemSlot slot, BlockSelection blockSel, IPlayer player)
-        {
-            int index = blockSel.SelectionBoxIndex;
-            bool nowCenterPlacement = inventory.Empty && (Math.Abs(blockSel.HitPosition.Z - 0.5f) < 0.1f && Math.Abs(blockSel.HitPosition.Y - 0.5f) < 0.1f)
-                || inventory.Empty && (Math.Abs(blockSel.HitPosition.X - 0.5f) < 0.1f && Math.Abs(blockSel.HitPosition.Y - 0.5f) < 0.1f);
-
-            var attr = slot.Itemstack.ItemAttributes;
-            float height = attr?["butterflycase"]["minHeight"]?.AsFloat(0.25f) ?? 0;
-            if (height > (this.Block as BlockButterflyCase)?.height)
-            {
-                (Api as ICoreClientAPI)?.TriggerIngameError(this, "tootall", Lang.Get("This item is too tall to fit in this display case."));
-                return false;
-            }
-
-
-            haveCenterPlacement = nowCenterPlacement;
-
-            if (inventory[index].Empty)
-            {
-                int moved = slot.TryPutInto(Api.World, inventory[index]);
-
-                if (moved > 0)
-                {
-                    BlockPos targetPos = blockSel.DidOffset ? blockSel.Position.AddCopy(blockSel.Face.Opposite) : blockSel.Position;
-                    double dx = player.Entity.Pos.X - (targetPos.X + blockSel.HitPosition.X);
-                    double dy = (float)player.Entity.Pos.Y - (targetPos.Y + blockSel.HitPosition.Y);
-                    double dz = (float)player.Entity.Pos.Z - (targetPos.Z + blockSel.HitPosition.Z);
-                    float angleHor = (float)Math.Atan2(dx, dz);
-                    //float angleVer = (float)Math.Atan2(-dy, dz);
-                    //float deg90 = GameMath.PIHALF;
-
-                    //rotations[index] = (int)Math.Round(angleHor / deg90) * deg90;
-                    //vertrotations[index] = (int)Math.Round(angleVer * deg90) * deg90;
-
-
-                    updateMeshes();
-
-                    MarkDirty(true);
-                }
-
-                return moved > 0;
-            }
-
-            return false;
-        }
-
-        private bool TryTake(IPlayer byPlayer, BlockSelection blockSel)
-        {
-            int index = blockSel.SelectionBoxIndex;
-            if (haveCenterPlacement)
-            {
-                for (int i = 0; i < inventory.Count; i++)
-                {
-                    if (!inventory[i].Empty) index = i;
-                }
-            }
-
-            if (!inventory[index].Empty)
-            {
-                ItemStack stack = inventory[index].TakeOut(1);
-                if (byPlayer.InventoryManager.TryGiveItemstack(stack))
-                {
-                    AssetLocation sound = stack.Block?.Sounds?.Place;
-                    Api.World.PlaySoundAt(sound != null ? sound : new AssetLocation("sounds/player/build"), byPlayer.Entity, byPlayer, true, 16);
-                }
-
-                if (stack.StackSize > 0)
-                {
-                    Api.World.SpawnItemEntity(stack, Pos.ToVec3d().Add(0.5, 0.5, 0.5));
-                }
-
-                updateMesh(index);
-                MarkDirty(true);
-                return true;
-            }
-
-            return false;
-        }
-
 
         protected override float[][] genTransformationMatrices()
         {
@@ -212,17 +81,9 @@ namespace butterflycases
                 float z = (index > 1) ? 4f / 16f : 4f / 16f;
 
 
-                float originRot = rotAdder();
-                //float originMult = 4f;
-                float originAdd = originOffsetSides();
-                float originAdd2 = originOffsetDepths();
-
-                float rawdegY = rotations[index] * GameMath.RAD2DEG;
-                float rawdegX = vertrotations[index] * GameMath.RAD2DEG;
-
-                float degY = GameMath.Clamp(rawdegY, 0, 0);
-                float degX = GameMath.Clamp(rawdegX, 90, 90);
-
+                float originRot = RotAdder();
+                float originAddX = OriginOffsetSides();
+                float originAddZ = OriginOffsetDepths();
 
                     if (haveCenterPlacement)
                     {
@@ -234,8 +95,8 @@ namespace butterflycases
                         tfMatrices[index] =
                         new Matrixf()
                         .RotateY(originRot)
-                        .Translate(x + originAdd + 0.01f, y + 0.17f, z + originAdd2 - 0.17f)
-                        .RotateXDeg(degX)
+                        .Translate(x + originAddX + 0.015f, y + 0.17f, z + originAddZ - 0.17f)
+                        .RotateXDeg(90)
                         .RotateYDeg(42f)
                         .Scale(0.85f, 0.85f, 0.85f)
                         .Translate(-0.5f, 0, -0.5f)
@@ -244,8 +105,8 @@ namespace butterflycases
                        tfMatrices[index] =
                         new Matrixf()
                         .RotateY(originRot)
-                        .Translate(x + originAdd + 0.01f, y + 0.17f, z + originAdd2 - 0.17f)
-                        .RotateXDeg(degX)
+                        .Translate(x + originAddX + 0.01f, y + 0.17f, z + originAddZ - 0.17f)
+                        .RotateXDeg(90)
                         .RotateYDeg(42f)
                         .Scale(0.80f, 0.75f, 0.75f)
                         .Translate(-0.5f, 0, -0.5f)
@@ -268,13 +129,6 @@ namespace butterflycases
                 tree.GetFloat("rotation2"),
                 tree.GetFloat("rotation3"),
             };
-            vertrotations = new float[]
-            {
-                tree.GetFloat("vertrotation0"),
-                tree.GetFloat("vertrotation1"),
-                tree.GetFloat("vertrotation2"),
-                tree.GetFloat("vertrotation3"),
-            };
         }
 
         public override void ToTreeAttributes(Vintagestory.API.Datastructures.ITreeAttribute tree)
@@ -286,20 +140,13 @@ namespace butterflycases
             tree.SetFloat("rotation1", rotations[1]);
             tree.SetFloat("rotation2", rotations[2]);
             tree.SetFloat("rotation3", rotations[3]);
-
-            tree.SetFloat("vertrotation0", vertrotations[0]);
-            tree.SetFloat("vertrotation1", vertrotations[1]);
-            tree.SetFloat("vertrotation2", vertrotations[2]);
-            tree.SetFloat("vertrotation3", vertrotations[3]);
         }
 
 
         new public void OnTransformed(ITreeAttribute tree, int degreeRotation, EnumAxis? flipAxis)
         {
             var rot = new int[] { 0, 1, 3, 2 };
-            var verrot = new int[] { 0, 1, 3, 2 };
             var rots = new float[4];
-            var verrots = new float[4];
             var treeAttribute = tree.GetTreeAttribute("inventory");
             inventory.FromTreeAttributes(treeAttribute);
             var inv = new ItemSlot[4];
@@ -308,7 +155,6 @@ namespace butterflycases
             for (var i = 0; i < 4; i++)
             {
                 rots[i] = tree.GetFloat("rotation" + i);
-                verrots[i] = tree.GetFloat("vertrotation" + i);
                 inv[i] = inventory[i];
             }
 
@@ -317,11 +163,8 @@ namespace butterflycases
                 var index = GameMath.Mod(i - start, 4);
                 // swap inventory and rotations with the new ones
                 rotations[rot[i]] = rots[rot[index]] - degreeRotation * GameMath.DEG2RAD;
-                vertrotations[verrot[i]] = verrots[verrot[index]] - degreeRotation * GameMath.DEG2RAD;
                 inventory[rot[i]] = inv[rot[index]];
-                inventory[verrot[i]] = inv[verrot[index]];
                 tree.SetFloat("rotation" + rot[i], rotations[rot[i]]);
-                tree.SetFloat("vertrotation" + verrot[i], vertrotations[verrot[i]]);
             }
 
             inventory.ToTreeAttributes(treeAttribute);

@@ -17,8 +17,6 @@ namespace butterflycases
 
         public bool haveCenterPlacement;
 
-        BlockFacing facing = BlockFacing.NORTH;
-
         public float[] rotations = new float[8];
         public float[] vertrotations = new float[8];
         public float[] rotValue
@@ -73,7 +71,7 @@ namespace butterflycases
         }
 
 
-        public void setBlockState(string state)
+        public void SetBlockState(string state)
         {
             AssetLocation loc = Block.CodeWithVariant("type", state);
             Block block = Api.World.GetBlock(loc);
@@ -129,7 +127,6 @@ namespace butterflycases
 
             return false;
         }
-        //Checks whether an indexed inventory slot is empty
 
         private bool TryTake(IPlayer byPlayer, BlockSelection blockSel)
         {
