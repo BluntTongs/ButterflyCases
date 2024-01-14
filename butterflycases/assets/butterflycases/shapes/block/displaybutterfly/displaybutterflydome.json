@@ -11,7 +11,7 @@
 		"oak": "block/woodvariants/oak",
 		"clear": "game:block/wood/displaycase/clear",
 		"paperback": "block/paperback",
-		"butterback": "block/butterback"
+		"black": "block/woodvariants/black"
 	},
 	"elements": [
 		{
@@ -118,11 +118,11 @@
 							"to": [ 4.75, 8.0, 4.75 ], 
 							"rotationOrigin": [ 4.3, 1.0, 4.2 ],
 							"faces": {
-								"north": { "texture": "#butterback", "uv": [ 0.0, 0.0, 0.5, 7.0 ] },
-								"east": { "texture": "#butterback", "uv": [ 0.0, 5.5, 0.5, 12.5 ] },
-								"south": { "texture": "#butterback", "uv": [ 0.0, 0.0, 0.5, 7.0 ] },
-								"west": { "texture": "#butterback", "uv": [ 0.0, 0.0, 0.5, 7.0 ] },
-								"up": { "texture": "#butterback", "uv": [ 15.0, 0.0, 15.5, 0.5 ] },
+								"north": { "texture": "#black", "uv": [ 0.0, 0.0, 0.5, 7.0 ] },
+								"east": { "texture": "#black", "uv": [ 0.0, 5.5, 0.5, 12.5 ] },
+								"south": { "texture": "#black", "uv": [ 0.0, 0.0, 0.5, 7.0 ] },
+								"west": { "texture": "#black", "uv": [ 0.0, 0.0, 0.5, 7.0 ] },
+								"up": { "texture": "#black", "uv": [ 15.0, 0.0, 15.5, 0.5 ] },
 								"down": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 16.0 ], "enabled": false, "autoUv": false }
 							}
 						}
