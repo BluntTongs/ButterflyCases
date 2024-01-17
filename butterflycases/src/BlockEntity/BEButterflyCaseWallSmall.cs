@@ -100,8 +100,8 @@ namespace butterflycases
                         new Matrixf()
                         .RotateY(originRot)
                         .Translate(x + originAdd, y + 0.17f, z + originAdd2 - 0.17f)
-                        .RotateXDeg(degX)
-                        .RotateYDeg(42f)
+                        .RotateXDeg(90)
+                        .RotateYDeg(42f) //as a reminder, it's like this specifically because butterfly origins/rotations are actually off in vanilla and do not properly snap to 45 degree angles.
                         .Scale(0.85f, 0.85f, 0.85f)
                         .Translate(-0.5f, 0, -0.5f)
                         .Values;
@@ -110,8 +110,8 @@ namespace butterflycases
                         new Matrixf()
                         .RotateY(originRot)
                         .Translate(x + originAdd, y + 0.17f, z + originAdd2 - 0.17f)
-                        .RotateXDeg(degX)
-                        .RotateYDeg(42f)
+                        .RotateXDeg(90)
+                        .RotateYDeg(45)
                         .Scale(0.80f, 0.75f, 0.75f)
                         .Translate(-0.5f, 0, -0.5f)
                         .Values;

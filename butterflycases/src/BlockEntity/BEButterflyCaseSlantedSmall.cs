@@ -87,12 +87,6 @@ namespace butterflycases
                 float originRot = RotAdder();
                 float originAdd = OriginOffsetSides();
                 float originAdd2 = OriginOffsetDepths();
-
-                float degY = rotations[index];
-                float rawdegX = vertrotations[index] * GameMath.RAD2DEG;
-
-                float degX = GameMath.Clamp(rawdegX, 45, 45);
-
                                    
 
                     if (inventory[index].Itemstack != null && inventory[index].Itemstack.Collectible is ItemDeadButterfly)
@@ -100,8 +94,7 @@ namespace butterflycases
                         new Matrixf()
                         .RotateY(originRot)
                         .Translate(x + originAdd + 0.02f, y + 0.17f, z + originAdd2 - 0.17f)
-                        //.RotateYDeg(degY)
-                        .RotateXDeg(degX)
+                        .RotateXDeg(45)
                         .RotateYDeg(42f)
                         .Scale(0.85f, 0.85f, 0.85f)
                         .Translate(-0.5f, 0, -0.5f)
@@ -111,9 +104,8 @@ namespace butterflycases
                         new Matrixf()
                         .RotateY(originRot)
                         .Translate(x + originAdd, y + 0.2f, z + originAdd2 - 0.17f)
-                        //.RotateYDeg(degY)
-                        .RotateXDeg(degX)
-                        .RotateYDeg(42f)
+                        .RotateXDeg(45)
+                        .RotateYDeg(45)
                         .Scale(0.80f, 0.75f, 0.75f)
                         .Translate(-0.5f, 0, -0.5f)
                         .Values;

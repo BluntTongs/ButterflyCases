@@ -107,7 +107,7 @@ namespace butterflycases
                         .RotateY(originRot)
                         .Translate(x + originAddX + 0.01f, y + 0.17f, z + originAddZ - 0.17f)
                         .RotateXDeg(90)
-                        .RotateYDeg(42f)
+                        .RotateYDeg(45)
                         .Scale(0.80f, 0.75f, 0.75f)
                         .Translate(-0.5f, 0, -0.5f)
                         .Values;

@@ -195,7 +195,7 @@ namespace butterflycases
 
                 float rawdegX = vertrotations[index] * GameMath.RAD2DEG;
                 float degX = GameMath.Clamp(rawdegX, 0, 30);
-
+                //Leftover code from another project that I'm keeping around in case I want to reimplement "dynamic" rotation of items later.
 
                 if (haveCenterPlacement)
                 {
