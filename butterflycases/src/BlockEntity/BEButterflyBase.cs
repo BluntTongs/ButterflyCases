@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -300,7 +301,11 @@ namespace butterflycases
             inventory.ToTreeAttributes(treeAttribute);
             tree["inventory"] = treeAttribute;
         }
+        public void OnTransformed(IWorldAccessor worldAccessor, ITreeAttribute tree, int degreeRotation,
+           Dictionary<int, AssetLocation> oldBlockIdMapping, Dictionary<int, AssetLocation> oldItemIdMapping, EnumAxis? flipAxis)
+        {
+            
+        }
 
-       
     }
 }

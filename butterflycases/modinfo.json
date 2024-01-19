@@ -8,6 +8,6 @@
     "description": "Adds display cases for properly displaying butterflies!",
     "version": "1.0.0",
     "dependencies": {
-        "game": "1.18.15"
+        "game": "1.19.00"
     }
 }
