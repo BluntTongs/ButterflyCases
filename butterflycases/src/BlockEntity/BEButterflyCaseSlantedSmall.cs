@@ -80,8 +80,8 @@ namespace butterflycases
             {
 
                 float x = 8 / 16f;
-                float y = 0.75f / 16f;
-                float z = 12f / 16f;
+                float y = 3.1f / 16f;
+                float z = 9.3f / 16f;
 
 
                 float originRot = RotAdder();
@@ -93,7 +93,7 @@ namespace butterflycases
                         tfMatrices[index] =
                         new Matrixf()
                         .RotateY(originRot)
-                        .Translate(x + originAdd + 0.02f, y + 0.17f, z + originAdd2 - 0.17f)
+                        .Translate(x + originAdd, y, z + originAdd2)
                         .RotateXDeg(45)
                         .RotateYDeg(45f)
                         .Scale(0.85f, 0.85f, 0.85f)
