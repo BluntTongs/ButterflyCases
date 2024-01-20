@@ -109,7 +109,7 @@ namespace butterflycases
                         tfMatrices[index] =
                         new Matrixf()
                         .RotateY(originRot)
-                        .Translate(x + originAdd, y + 0.05, z + originAdd2)
+                        .Translate(x + originAdd, y + 0.05, z + originAdd2 - 0.07f)
                         .RotateXDeg(90)
                         .RotateYDeg(45)
                         .Scale(0.80f, 0.75f, 0.75f)
