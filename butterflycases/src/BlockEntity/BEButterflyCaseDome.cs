@@ -25,6 +25,50 @@ namespace butterflycases
         {
             inventory = new InventoryDisplayed(this, 1, "butterflycasedome-0", null, null);
         }
+        private bool TryPut(ItemSlot slot, BlockSelection blockSel, IPlayer player)
+        {
+            int index = blockSel.SelectionBoxIndex;
+            bool nowCenterPlacement = inventory.Empty && Math.Abs(blockSel.HitPosition.X - 0.5f) < 0.1 && Math.Abs(blockSel.HitPosition.Z - 0.5f) < 0.1;
+
+            var attr = slot.Itemstack.ItemAttributes;
+            float height = attr?["butterflycase"]["minHeight"]?.AsFloat(0.25f) ?? 0;
+            if (height > (this.Block as BlockButterflyCase)?.height)
+            {
+                (Api as ICoreClientAPI)?.TriggerIngameError(this, "tootall", Lang.Get("This item is too tall to fit in this display case."));
+                return false;
+            }
+            //This stuff is mostly just inherited from the original display case code.
+
+
+            haveCenterPlacement = nowCenterPlacement;
+
+            if (inventory[index].Empty)
+            {
+                int moved = slot.TryPutInto(Api.World, inventory[index]);
+
+                if (moved > 0)
+                {
+                    BlockPos targetPos = blockSel.DidOffset ? blockSel.Position.AddCopy(blockSel.Face.Opposite) : blockSel.Position;
+                    double dx = player.Entity.Pos.X - (targetPos.X + blockSel.HitPosition.X);
+                    double dy = (float)player.Entity.Pos.Y - (targetPos.Y + blockSel.HitPosition.Y);
+                    double dz = (float)player.Entity.Pos.Z - (targetPos.Z + blockSel.HitPosition.Z);
+                    float angleHor = (float)Math.Atan2(dx, dz);
+                    float angleVer = (float)Math.Atan2(-dy, dz);
+                    float deg45 = GameMath.PIHALF/2;
+                    rotations[index] = (int)Math.Round(angleHor / deg45) * deg45;
+                    vertrotations[index] = (int)Math.Round(angleVer * deg45) * deg45;
+                     
+
+                    updateMeshes();
+
+                    MarkDirty(true);
+                }
+
+                return moved > 0;
+            }
+
+            return false;
+        }
         new public void SetBlockState(string state)
         {
             AssetLocation loc = Block.CodeWithVariant("type", state);
@@ -40,43 +84,6 @@ namespace butterflycases
             BlockFacing facing = BlockFacing.FromCode(block.LastCodePart());
             return facing == null ? BlockFacing.NORTH : facing;
         }
-        public float RotAdder()
-        {
-
-            BlockFacing displayFacing = GetFacing();
-            float RotAdder = 1;
-            if (displayFacing == BlockFacing.NORTH) RotAdder = 0f;
-            if (displayFacing == BlockFacing.EAST) RotAdder = 4.71f;
-            if (displayFacing == BlockFacing.SOUTH) RotAdder = 3.14f;
-            if (displayFacing == BlockFacing.WEST) RotAdder = 1.57f;
-
-            return RotAdder;
-
-        }
-        
-        public float OriginOffsetSides()
-        {
-            BlockFacing displayFacing = GetFacing();
-            float OriginOffsetSides = 0f;
-            if (displayFacing == BlockFacing.NORTH) OriginOffsetSides = 0f;
-            if (displayFacing == BlockFacing.EAST) OriginOffsetSides = 0f;
-            if (displayFacing == BlockFacing.SOUTH) OriginOffsetSides = -1f;
-            if (displayFacing == BlockFacing.WEST) OriginOffsetSides = -1f;
-
-            return OriginOffsetSides;
-        }
-
-        public float OriginOffsetDepths()
-        {
-            BlockFacing displayFacing = GetFacing();
-            float OriginOffsetDepths = 0f;
-            if (displayFacing == BlockFacing.NORTH) OriginOffsetDepths = 0f;
-            if (displayFacing == BlockFacing.EAST) OriginOffsetDepths = -1f;
-            if (displayFacing == BlockFacing.SOUTH) OriginOffsetDepths = -1f;
-            if (displayFacing == BlockFacing.WEST) OriginOffsetDepths = 0f;
-
-            return OriginOffsetDepths;
-        }
         protected override float[][] genTransformationMatrices()
         {
             float[][] tfMatrices = new float[1][];
@@ -86,15 +93,12 @@ namespace butterflycases
             for (int index = 0; index < 1; index++)
             {
 
-                float x = 8.3f / 16f;
-                float y = 5 / 16f;
-                float z = 11 / 16f;
+                float x = 8f / 16f;
+                float y = 8f / 16f;
+                float z = 8f / 16f;
 
 
-                float originRot = RotAdder();
-                float originAdd = OriginOffsetSides();
-                float originAdd2 = OriginOffsetDepths();
-
+                float degY = rotations[index] * GameMath.RAD2DEG;
                 float rawdegX = vertrotations[index] * GameMath.RAD2DEG;
 
                 float degX = GameMath.Clamp(rawdegX, 45, 45);
@@ -102,20 +106,20 @@ namespace butterflycases
                     if (inventory[index].Itemstack != null && inventory[index].Itemstack.Collectible is ItemDeadButterfly)
                         tfMatrices[index] =
                         new Matrixf()
-                        .RotateY(originRot)
-                        .Translate(x + originAdd, y + 0.17f, z + originAdd2 - 0.17f)
+                        .Translate(x, y, z)
+                        .RotateYDeg(degY)
                         .RotateXDeg(degX)
-                        .RotateYDeg(42)
+                        .RotateYDeg(45f)
                         .Scale(0.85f, 0.85f, 0.85f)
                         .Translate(-0.5f, 0, -0.5f)
                         .Values;
                     else
                         tfMatrices[index] =
                         new Matrixf()
-                        .RotateY(originRot)
-                        .Translate(x + originAdd - 0.01f, y + 0.15f, z + originAdd2 - 0.2f)
+                        .Translate(x, y, z)
+                        .RotateYDeg(degY)
                         .RotateXDeg(degX)
-                        .RotateYDeg(45)
+                        .RotateYDeg(45f)
                         .Scale(0.80f, 0.75f, 0.75f)
                         .Translate(-0.5f, 0, -0.5f)
                         .Values;
