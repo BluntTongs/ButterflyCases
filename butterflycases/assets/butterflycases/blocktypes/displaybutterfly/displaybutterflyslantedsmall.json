@@ -147,7 +147,7 @@
   "drops": [
     {
       "type": "block",
-      "code": "displaybutterflslantedsmall-north",
+      "code": "displaybutterflyslantedsmall-{type}-north",
       "quantity": { "avg": 1 }
     }
   ]

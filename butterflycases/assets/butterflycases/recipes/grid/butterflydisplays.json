@@ -3,7 +3,7 @@
 	{
 		ingredientPattern: "G,G,P",
 		ingredients: {
-			"P": { type: "item", code: "game:plank-*", name: "type", quantity: 2, skipVariants: ["agedebony", "rottenebony"] },
+			"P": { type: "item", code: "game:plank-*", name: "type", quantity: 2, skipVariants: ["agedebony", "rottenebony", "aged"] },
 			"G": { type: "block", code: "game:glass-plain"},
 		},
 		width: 1,
@@ -15,7 +15,7 @@
 	{
 		ingredientPattern: "PP,PG,PP",
 		ingredients: {
-			"P": { type: "item", code: "game:plank-*", name: "type", quantity: 1, skipVariants: ["agedebony", "rottenebony"] },
+			"P": { type: "item", code: "game:plank-*", name: "type", quantity: 1, skipVariants: ["agedebony", "rottenebony", "aged"] },
 			"G": { type: "block", code: "game:glass-plain"},
 		},
 		width: 2,
@@ -26,7 +26,7 @@
 	{
 		ingredientPattern: "_P_,PGP,_P_",
 		ingredients: {
-			"P": { type: "item", code: "game:plank-*", name: "type", quantity: 1, skipVariants: ["agedebony", "rottenebony"] },
+			"P": { type: "item", code: "game:plank-*", name: "type", quantity: 1, skipVariants: ["agedebony", "rottenebony", "aged"] },
 			"G": { type: "block", code: "game:glass-plain"},
 		},
 		width: 3,
@@ -37,7 +37,7 @@
 	{
 		ingredientPattern: "P__,PG_,PPP",
 		ingredients: {
-			"P": { type: "item", code: "game:plank-*", name: "type", quantity: 1, skipVariants: ["agedebony", "rottenebony"] },
+			"P": { type: "item", code: "game:plank-*", name: "type", quantity: 1, skipVariants: ["agedebony", "rottenebony", "aged"] },
 			"G": { type: "block", code: "game:glass-plain"},
 		},
 		width: 3,
@@ -48,7 +48,7 @@
 	{
 		ingredientPattern: "PG,_P",
 		ingredients: {
-			"P": { type: "item", code: "game:plank-*", name: "type", quantity: 2, skipVariants: ["agedebony", "rottenebony"] },
+			"P": { type: "item", code: "game:plank-*", name: "type", quantity: 2, skipVariants: ["agedebony", "rottenebony", "aged"] },
 			"G": { type: "block", code: "game:glass-plain"},
 		},
 		width: 2,
