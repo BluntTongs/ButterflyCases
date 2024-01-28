@@ -81,7 +81,7 @@ namespace butterflycases
 
                 float x = 8 / 16f;
                 float y = 3.1f / 16f;
-                float z = 9.3f / 16f;
+                float z = 9.5f / 16f;
 
 
                 float originRot = RotAdder();
