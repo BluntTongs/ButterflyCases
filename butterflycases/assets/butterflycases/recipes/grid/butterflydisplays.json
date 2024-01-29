@@ -11,6 +11,23 @@
 		output: { type: "block", code: "butterflycases:displaybutterflydome-{type}-north", quantity: 1  }
 	},
 	
+	{
+		ingredientPattern: "G_,G_,PB",
+		ingredients: {
+			"P": { type: "item", code: "game:plank-*", quantity: 2, skipVariants: ["agedebony", "rottenebony", "aged"] },
+			"G": { type: "block", code: "game:glass-plain"},
+			"B": { type: "block", code: "game:woodbucket"},
+		},
+		attributes: {
+			liquidContainerProps: {
+				requiresContent: { type: "item", code: "game:dye-black" },
+				requiresLitres: 2
+			}
+		},	
+		width: 2,
+		height: 3,
+		output: { type: "block", code: "butterflycases:displaybutterflydome-black-north", quantity: 1  }
+	},
 
 	{
 		ingredientPattern: "PP,PG,PP",
@@ -21,6 +38,23 @@
 		width: 2,
 		height: 3,
 		output: { type: "block", code: "butterflycases:displaybutterflywall-{type}-north", quantity: 1  }
+	},
+	{
+		ingredientPattern: "PP_,PG_,PPB",
+		ingredients: {
+			"P": { type: "item", code: "game:plank-*", quantity: 1, skipVariants: ["agedebony", "rottenebony", "aged"] },
+			"G": { type: "block", code: "game:glass-plain"},
+			"B": { type: "block", code: "game:woodbucket"},
+		},
+		attributes: {
+			liquidContainerProps: {
+				requiresContent: { type: "item", code: "game:dye-black" },
+				requiresLitres: 2
+			}
+		},	
+		width: 3,
+		height: 3,
+		output: { type: "block", code: "butterflycases:displaybutterflywall-black-north", quantity: 1  }
 	},
 	
 	{
@@ -33,6 +67,23 @@
 		height: 3,
 		output: { type: "block", code: "butterflycases:displaybutterflywallsmall-{type}-north", quantity: 1  }
 	},
+	{
+		ingredientPattern: "_P_,PGP,_PB",
+		ingredients: {
+			"P": { type: "item", code: "game:plank-*", quantity: 1, skipVariants: ["agedebony", "rottenebony", "aged"] },
+			"G": { type: "block", code: "game:glass-plain"},
+			"B": { type: "block", code: "game:woodbucket"},
+		},
+		attributes: {
+			liquidContainerProps: {
+				requiresContent: { type: "item", code: "game:dye-black" },
+				requiresLitres: 2
+			}
+		},	
+		width: 3,
+		height: 3,
+		output: { type: "block", code: "butterflycases:displaybutterflywallsmall-black-north", quantity: 1  }
+	},
 	
 	{
 		ingredientPattern: "P__,PG_,PPP",
@@ -44,6 +95,23 @@
 		height: 3,
 		output: { type: "block", code: "butterflycases:displaybutterflyslanted-{type}-north", quantity: 1  }
 	},
+	{
+		ingredientPattern: "P__,PGB,PPP",
+		ingredients: {
+			"P": { type: "item", code: "game:plank-*", quantity: 1, skipVariants: ["agedebony", "rottenebony", "aged"] },
+			"G": { type: "block", code: "game:glass-plain"},
+			"B": { type: "block", code: "game:woodbucket"},
+		},
+		attributes: {
+			liquidContainerProps: {
+				requiresContent: { type: "item", code: "game:dye-black" },
+				requiresLitres: 2
+			}
+		},	
+		width: 3,
+		height: 3,
+		output: { type: "block", code: "butterflycases:displaybutterflyslanted-black-north", quantity: 1  }
+	},
 	
 	{
 		ingredientPattern: "PG,_P",
@@ -54,6 +122,23 @@
 		width: 2,
 		height: 2,
 		output: { type: "block", code: "butterflycases:displaybutterflyslantedsmall-{type}-north", quantity: 1  }
+	},
+	{
+		ingredientPattern: "PG,BP",
+		ingredients: {
+			"P": { type: "item", code: "game:plank-*", quantity: 1, skipVariants: ["agedebony", "rottenebony", "aged"] },
+			"G": { type: "block", code: "game:glass-plain"},
+			"B": { type: "block", code: "game:woodbucket"},
+		},
+		attributes: {
+			liquidContainerProps: {
+				requiresContent: { type: "item", code: "game:dye-black" },
+				requiresLitres: 2
+			}
+		},	
+		width: 2,
+		height: 2,
+		output: { type: "block", code: "butterflycases:displaybutterflyslantedsmall-black-north", quantity: 1  }
 	}
 	
 	
